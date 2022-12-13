@@ -57,7 +57,7 @@
     min-width: 300px;
     width: 30vw;
     /* background: rgba(123, 163, 243, 0.8); */
-    background: #F2EBE9;
+    background: whitesmoke;
     /* filter: blur(10px); */
     border-radius: 1rem;
 }
@@ -91,12 +91,12 @@
     width: 60%;
     padding: .6rem;
     border:none;
-    font-size: 1rem;
-    font-weight: 800;
+    font-size: 0.85rem;
+    font-weight: 600;
     cursor: pointer;
     background: var(--primaryDark);
     background-size: 26rem 5rem;
-    border-radius: 1rem;
+    border-radius: 0.6rem;
     color: whitesmoke;
 }
 
@@ -151,4 +151,5 @@
     flex-direction: column;
     padding-top: 4rem !important;
     flex: 2;
+    gap: 1.5rem;
 }

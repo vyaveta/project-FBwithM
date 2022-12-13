@@ -10,9 +10,10 @@ import axios from 'axios'
 import css from '../styles/login.module.css'
 import Link from 'next/link';
 import {IoIosArrowForward} from 'react-icons/io'
+import {IoIosArrowBack} from 'react-icons/io'
 import {AiFillEye} from 'react-icons/ai'
 import {AiFillEyeInvisible} from 'react-icons/ai'
-import { TailSpin } from 'react-loading-icons'
+import { Oval } from 'react-loading-icons'
 
 import ImageDropDiv from '../components/ImageDropDiv';
 
@@ -54,7 +55,7 @@ const Signup = () => {
     const [showConfirmPassword,setShowConfirmPassword] = useState(false)
 
     const [validUsername,setValidUsername] = useState(false)
-    const [usernameLoading,setUsernameLoading] = useState(false)
+    const [usernameLoading,setUsernameLoading] = useState(true)
     const [usernameFocus,setUsernameFocus] = useState(false)
 
     const [errMsg,setErrMsg] = useState()
@@ -134,9 +135,8 @@ const Signup = () => {
     }
 
     const checkFinalSignUpStep = () => {
-        // if(validName && validMatch && validEmail && validPwd) 
-        setFinalSignUpStep(true)
-       // else handleError('Input your details correctly and try again!')
+         if(validName && validUsername && validEmail ) setFinalSignUpStep(true)
+       else handleError('Input your details correctly and try again!')
     }
 
     const setProfile = (e) => {
@@ -212,6 +212,54 @@ const Signup = () => {
                     </p>
                 </div>
                 <div className={css.login__box}>
+                        <div className={css.input__div__2}>
+                        <input type="text" name="" id="username" placeholder='User name' 
+                        onChange = {(e) => setUsername(e.target.value)}
+                        value ={username}
+                        aria-invalid = {validUsername ? 'false' : 'true'}
+                        autoComplete = 'off'
+                        aria-describedby='uidnote'
+                        onFocus={ () => setUsernameFocus(true)}
+                        onBlur = { () => setUsernameFocus(false)}
+                        />
+                        <label htmlFor=""> 
+                        <span className={validUsername ? 'valid' : 'hide'}>
+                            <FontAwesomeIcon icon={faCheck} className='the_small_icon'  />
+                        </span>
+                        <span className={validUsername || !username ? 'hide' : 'invalid'}>
+                            {
+                                usernameLoading ? <Oval className='the_small_icon' stroke="#1e90ff" strokeWidth={5} speed={.75}  /> :  <FontAwesomeIcon icon={faTimes} className='the_small_icon'  />
+                            }
+                           
+                        </span>
+                        </label>
+                        </div>
+                        <p id='uidnote' className={  usernameFocus && username && !validUsername ? 'instructions ' : 'offscreen '}>
+                        <FontAwesomeIcon icon={faInfoCircle} className='the_small_icon'  />
+                        &nbsp; This name must be unique.
+                        </p>
+                        </div>
+                
+                <div className={css.login__box}>
+                    <button className="login__button" onClick={checkFinalSignUpStep} >Final Step <IoIosArrowForward/> </button>
+                </div>
+                <div className="login__box" id='googleSignIn'></div>
+                <div className={css.login__box}>
+                    <p className={css.bottom__text} >Already have an Account? <span 
+                    style={{ textDecoration: 'underline', cursor: 'pointer' }} 
+                    ><Link href='/login' >Sign In</Link></span> </p>
+                    <p ref={errRef} className = {errMsg ? 'errmsg' : 'offscreen'} aria-live= 'assertive' >{errMsg}</p>
+                </div>
+            </>
+                }
+
+                {
+                    finalSignUpStep && 
+                    (
+                        <>
+                        <ImageDropDiv mediaPreview={mediaPreview} setMediaPreview={setMediaPreview} setMedia={setMedia} inputRef={inputRef} highlighted={highlighted} setHighlighted={setHighlighted} handleChange={setProfile}  />
+                        <div className={css.secondContainer}>
+                        <div className={css.login__box}>
                    <div className={css.input__div__2}>
                    <input type= {showPassword ? 'text' : 'password'} 
                     placeholder='password' name="" id=""
@@ -277,49 +325,12 @@ const Signup = () => {
                         </p>
                 </div>
                 <div className={css.login__box}>
-                    <button className="login__button" onClick={checkFinalSignUpStep} >Final Step <IoIosArrowForward/> </button>
+                    <button className="login__button" onClick={() => setFinalSignUpStep(false)} >Go Back<IoIosArrowBack/> </button>
                 </div>
-                <div className="login__box" id='googleSignIn'></div>
-                <div className={css.login__box}>
-                    <p className={css.bottom__text} >Already have an Account? <span 
-                    style={{ textDecoration: 'underline', cursor: 'pointer' }} 
-                    ><Link href='/login' >Sign In</Link></span> </p>
-                    <p ref={errRef} className = {errMsg ? 'errmsg' : 'offscreen'} aria-live= 'assertive' >{errMsg}</p>
-                </div>
-            </>
-                }
 
-                {
-                    finalSignUpStep && 
-                    (
-                        <>
-                        <ImageDropDiv mediaPreview={mediaPreview} setMediaPreview={setMediaPreview} setMedia={setMedia} inputRef={inputRef} highlighted={highlighted} setHighlighted={setHighlighted} handleChange={setProfile}  />
-                        <div className={css.secondContainer}>
-                        <div className={css.login__box}>
-                        <div className={css.input__div__2}>
-                        <input type="text" name="" id="username" placeholder='User name' 
-                        onChange = {(e) => setUsername(e.target.value)}
-                        value ={username}
-                        aria-invalid = {validUsername ? 'false' : 'true'}
-                        autoComplete = 'off'
-                        aria-describedby='uidnote'
-                        onFocus={ () => setUsernameFocus(true)}
-                        onBlur = { () => setUsernameFocus(false)}
-                        />
-                        <label htmlFor=""> 
-                        <span className={validUsername ? 'valid' : 'hide'}>
-                            <FontAwesomeIcon icon={faCheck} className='the_small_icon'  />
-                        </span>
-                        <span className={validUsername || !username ? 'hide' : 'invalid'}>
-                            <FontAwesomeIcon icon={faTimes} className='the_small_icon'  />
-                        </span>
-                        </label>
-                        </div>
-                        <p id='uidnote' className={  usernameFocus && username && !validUsername ? 'instructions ' : 'offscreen '}>
-                        <FontAwesomeIcon icon={faInfoCircle} className='the_small_icon'  />
-                        &nbsp; This name must be unique.
-                        </p>
-                        </div>
+                <div className={css.login__box}>
+                    <button className="login__button" onClick={handleSubmit} >Complete Sign up<IoIosArrowForward/> </button>
+                </div>
                         </div>
                         </>
                     )

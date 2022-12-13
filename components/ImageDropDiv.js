@@ -45,7 +45,7 @@ const ImageDropDiv = ({highlighted,setHighlighted,inputRef,handleChange,mediaPre
                         ) : (
                             <>
                             <div >
-                                <Image className='borderRadius50' width='100' height='100'  src={mediaPreview}   style={{cursor:'pointer', objectFit:'cover'}} onClick={() => inputRef.current.click()} />
+                                <Image className='borderRadius50' width='140' height='140'  src={mediaPreview}   style={{cursor:'pointer', objectFit:'cover'}} onClick={() => inputRef.current.click()} />
                             </div>
                         </>
                         )
