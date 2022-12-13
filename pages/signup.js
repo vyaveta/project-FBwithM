@@ -76,13 +76,8 @@ const Signup = () => {
 
     // Now some useEffects
 
-
     useEffect(() => {
-        
-    },[])
-
-    useEffect(() => {
-          userRef.current.focus()
+          userRef.current.focus() // This is to make the focus to the input field on rendering the page
     },[])
 
     useEffect(() => {
@@ -105,9 +100,9 @@ const Signup = () => {
     useEffect(() => {
         setErrMsg('')
     },[user,pwd,matchPwd])
-
+   
     const handleSubmit = async () => {
-      
+      console.log(user,pwd,email ,' are the values')
     }
 
   return (
@@ -237,7 +232,7 @@ const Signup = () => {
                         </p>
                 </div>
                 <div className={css.login__box}>
-                    <button className="login__button" onClick={handleSubmit} >NextStep <IoIosArrowForward/> </button>
+                    <button className="login__button" onClick={handleSubmit} >Final Step <IoIosArrowForward/> </button>
                 </div>
                 <div className="login__box" id='googleSignIn'></div>
                 <div className={css.login__box}>
