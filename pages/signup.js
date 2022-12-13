@@ -1,6 +1,7 @@
 import React from 'react'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Form, Segment, Image, Icon , Header } from 'semantic-ui-react'
 import { useRef } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -11,18 +12,26 @@ import Link from 'next/link';
 import {IoIosArrowForward} from 'react-icons/io'
 import {AiFillEye} from 'react-icons/ai'
 import {AiFillEyeInvisible} from 'react-icons/ai'
+import { TailSpin } from 'react-loading-icons'
 
+import ImageDropDiv from '../components/ImageDropDiv';
 
-const USER_REGEX = /^[a-zA-z][a-zA-Z ]{3,23}$/;
+import FinalSignUpStep from '../components/FinalSignUpStep';
+
+const USER_NAME_REGEX = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
+const USER_REGEX = /^[a-zA-z][a-zA-Z ]{3,23}$/; // This regex is for the validation of users real name
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&()/.,_*])[a-zA-Z0-9!@#$%^&()/.,_*]{6,16}$/;
 const EMAIL_REGEX =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 const Signup = () => {
 
+    const [finalSignUpStep,setFinalSignUpStep] = useState(false)
+
     const userRef = useRef()
     const errRef = useRef()
 
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState('') // this holds the real name of the user
+    const [username,setUsername] = useState('')
     const [isGoogleAccount,setIsGoogleAccount] = useState(false)
     const [validName, setValidName] = useState(false)
     const [userFocus, setUserFocus] = useState(false)
@@ -36,13 +45,22 @@ const Signup = () => {
     const [validMatch, setValidMatch] = useState(false); 
     const [matchFocus, setMatchFocus] = useState(false);
 
+    const [media,setMedia] = useState(null)
+    const [mediaPreview,setMediaPreview] = useState(null)
+    const [highlighted,setHighlighted] =useState(false)
+    const inputRef = useRef()
+
     const [showPassword,setShowPassword] = useState(false)
     const [showConfirmPassword,setShowConfirmPassword] = useState(false)
+
+    const [validUsername,setValidUsername] = useState(false)
+    const [usernameLoading,setUsernameLoading] = useState(false)
+    const [usernameFocus,setUsernameFocus] = useState(false)
 
     const [errMsg,setErrMsg] = useState()
 
     const toastOptions =  {
-        position: "top-right",
+        position: "bottom-left",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -100,9 +118,36 @@ const Signup = () => {
     useEffect(() => {
         setErrMsg('')
     },[user,pwd,matchPwd])
+
+    useEffect(() => {
+        
+    },[finalSignUpStep])
+
+    useEffect(() => {
+        const result = USER_NAME_REGEX.test(username)
+        if(result && username.length > 3) setValidUsername(true)
+        else setValidUsername(false)
+    },[username])
    
     const handleSubmit = async () => {
       console.log(user,pwd,email ,' are the values')
+    }
+
+    const checkFinalSignUpStep = () => {
+        // if(validName && validMatch && validEmail && validPwd) 
+        setFinalSignUpStep(true)
+       // else handleError('Input your details correctly and try again!')
+    }
+
+    const setProfile = (e) => {
+        try{
+        const files = e.target.files
+        setMedia(files[0])
+        console.log(files,'is the files')
+        setMediaPreview(URL.createObjectURL(files[0]))
+        }catch(err){
+            handleError('Select a valid image for profile')
+        }  
     }
 
   return (
@@ -112,14 +157,14 @@ const Signup = () => {
             <img src='/cloud.png' alt="" />
         </div>
             <div className={css.login__container}>
-                <div className={css.login__title}>
+                {
+                    !finalSignUpStep && 
+            <>
+                    <div className={css.login__title}>
                     <h2>Register</h2>
                 </div>
 
                 <div className={css.login__box}>
-                <label htmlFor=""> 
-
-                </label>
                     <div className={css.input__div__2}>
                     <input type="text" name="" id="username" placeholder='Real name' ref={userRef} 
                     onChange = {(e) => setUser(e.target.value)}
@@ -232,7 +277,7 @@ const Signup = () => {
                         </p>
                 </div>
                 <div className={css.login__box}>
-                    <button className="login__button" onClick={handleSubmit} >Final Step <IoIosArrowForward/> </button>
+                    <button className="login__button" onClick={checkFinalSignUpStep} >Final Step <IoIosArrowForward/> </button>
                 </div>
                 <div className="login__box" id='googleSignIn'></div>
                 <div className={css.login__box}>
@@ -241,6 +286,44 @@ const Signup = () => {
                     ><Link href='/login' >Sign In</Link></span> </p>
                     <p ref={errRef} className = {errMsg ? 'errmsg' : 'offscreen'} aria-live= 'assertive' >{errMsg}</p>
                 </div>
+            </>
+                }
+
+                {
+                    finalSignUpStep && 
+                    (
+                        <>
+                        <ImageDropDiv mediaPreview={mediaPreview} setMediaPreview={setMediaPreview} setMedia={setMedia} inputRef={inputRef} highlighted={highlighted} setHighlighted={setHighlighted} handleChange={setProfile}  />
+                        <div className={css.secondContainer}>
+                        <div className={css.login__box}>
+                        <div className={css.input__div__2}>
+                        <input type="text" name="" id="username" placeholder='User name' 
+                        onChange = {(e) => setUsername(e.target.value)}
+                        value ={username}
+                        aria-invalid = {validUsername ? 'false' : 'true'}
+                        autoComplete = 'off'
+                        aria-describedby='uidnote'
+                        onFocus={ () => setUsernameFocus(true)}
+                        onBlur = { () => setUsernameFocus(false)}
+                        />
+                        <label htmlFor=""> 
+                        <span className={validUsername ? 'valid' : 'hide'}>
+                            <FontAwesomeIcon icon={faCheck} className='the_small_icon'  />
+                        </span>
+                        <span className={validUsername || !username ? 'hide' : 'invalid'}>
+                            <FontAwesomeIcon icon={faTimes} className='the_small_icon'  />
+                        </span>
+                        </label>
+                        </div>
+                        <p id='uidnote' className={  usernameFocus && username && !validUsername ? 'instructions ' : 'offscreen '}>
+                        <FontAwesomeIcon icon={faInfoCircle} className='the_small_icon'  />
+                        &nbsp; This name must be unique.
+                        </p>
+                        </div>
+                        </div>
+                        </>
+                    )
+                }
             </div>
         </div>
     )

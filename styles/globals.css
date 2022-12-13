@@ -34,6 +34,12 @@ a {
   }
 }
 
+.borderRadius50{
+  border-radius: 50%;
+}
+
+
+
 .hide{
   display: none;
 }
