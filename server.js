@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV!=='production'
 const nextApp = next({dev})
 const handle = nextApp.getRequestHandler()
 
-require('dotenv').config({path:"./config.env"})
+require('dotenv').config() //{path:"./config.env"}
 const connectDB = require('./utilsServer/connectDb')
 const PORT = process.env.PORT || 3000
 app.use(express.json()); // this is the body parser
