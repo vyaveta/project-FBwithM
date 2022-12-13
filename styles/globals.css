@@ -1,0 +1,60 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --primaryColor: #A91079;
+  --primaryDark: #2E0249;
+  --primaryLight: #F806CC;
+}
+
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+.hide{
+  display: none;
+}
+.invalid{
+  color: red !important;
+}
+.offscreen{
+  display: none;
+}
+.instructions{
+  color: #333;
+  padding: 0 1rem;
+  font-size: 12px !important;
+}
+.the_small_icon{
+  /* display: none; */
+  height: 15px !important;
+  font-size: 0px !important;
+}
+.login__button{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
