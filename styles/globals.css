@@ -41,13 +41,13 @@ a {
 
 
 .hide{
-  display: none;
+  visibility: hidden;
 }
 .invalid{
   color: red !important;
 }
 .offscreen{
-  display: none;
+  visibility: hidden;
 }
 .instructions{
   color: #333;

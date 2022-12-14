@@ -6,7 +6,6 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify'
-import axios from 'axios'
 import css from '../styles/login.module.css'
 import Link from 'next/link';
 import {IoIosArrowForward} from 'react-icons/io'
@@ -14,6 +13,9 @@ import {IoIosArrowBack} from 'react-icons/io'
 import {AiFillEye} from 'react-icons/ai'
 import {AiFillEyeInvisible} from 'react-icons/ai'
 import { Oval } from 'react-loading-icons'
+import axios from 'axios';
+import baseUrl from '../utils/baseUrl';
+
 
 import ImageDropDiv from '../components/ImageDropDiv';
 
@@ -23,6 +25,7 @@ const USER_NAME_REGEX = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 const USER_REGEX = /^[a-zA-z][a-zA-Z ]{3,23}$/; // This regex is for the validation of users real name
 const PWD_REGEX = /^(?=.*[0-9])(?=.*[!@#$%^&()/.,_*])[a-zA-Z0-9!@#$%^&()/.,_*]{6,16}$/;
 const EMAIL_REGEX =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+let cancelUsernameCheck; // This variable is used to cancel the axios check username request if the request is pending
 
 const Signup = () => {
 
@@ -57,7 +60,7 @@ const Signup = () => {
     const [showConfirmPassword,setShowConfirmPassword] = useState(false)
 
     const [validUsername,setValidUsername] = useState(false)
-    const [usernameLoading,setUsernameLoading] = useState(true)
+    const [usernameLoading,setUsernameLoading] = useState(false)
     const [usernameFocus,setUsernameFocus] = useState(false)
 
     const [errMsg,setErrMsg] = useState()
@@ -95,6 +98,23 @@ const Signup = () => {
        }
     }
 
+    const isUsernameAlreadyTaken = async () => {
+        try{
+            cancelUsernameCheck && cancelUsernameCheck() 
+            const CancelToken = axios.CancelToken
+            setUsernameLoading(true)
+            const {data} = await axios.get(`${baseUrl}/api/signup/${username}`,{cancelToken: new CancelToken(cancelor => {
+                cancelUsernameCheck = cancelor
+            })})
+            if(data.status)  setValidUsername(true)
+        }catch(e){
+            console.log(e,'is the error that occured in the isUsernameAlreadyTaken')
+            setValidUsername(false)
+        }finally {
+            setUsernameLoading(false)
+        }
+    }
+
     // Now some useEffects
 
     useEffect(() => {
@@ -128,7 +148,9 @@ const Signup = () => {
 
     useEffect(() => {
         const result = USER_NAME_REGEX.test(username)
-        if(result && username.length > 3) setValidUsername(true)
+        if(result && username.length > 3) {
+            isUsernameAlreadyTaken()
+        }
         else setValidUsername(false)
     },[username])
    
@@ -327,7 +349,9 @@ const Signup = () => {
                         </p>
                 </div>
                 <div className={css.login__box}>
+                    <div className={css.input__div__2} >
                     <button className="login__button" onClick={() => setFinalSignUpStep(false)} >Go Back<IoIosArrowBack/> </button>
+                    </div>
                 </div>
 
                 <div className={css.login__box}>

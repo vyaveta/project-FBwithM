@@ -14,6 +14,9 @@ app.use(express.json()); // this is the body parser
 connectDB()
 
 nextApp.prepare().then(() => {
+
+   app.use('/api/signup' , require('./pages/api/signup'))
+
     app.all('*' , (req,res) => handle(req,res))
     server.listen(PORT, err => {
         if(err) throw err

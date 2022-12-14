@@ -11,19 +11,20 @@ const userPng = "https://res.cloudinary.com/indersingh/image/upload/v1593464618/
 const USER_NAME_REGEX = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
 router.get('/:username' ,async (req,res) => {
+    console.log(req.params,'is the params')
     const {username} = req.params
     try{
-       if(username.length < 1) return res.status(401).send('invalid username')
-       if(!USER_NAME_REGEX.test(username)) return res.status(401).send('invalid username')
+       if(username.length < 1) return res.status(401).json({status: false, msg: 'Invalid Username'})
+       if(!USER_NAME_REGEX.test(username)) return res.status(401).json({status: false, msg: 'Invalid username'})
 
        const user = await UserModel.findOne({username:username.toLowerCase()})
-       if(user) return res.status(401).send('Username already taken')
+       if(user) return res.status(401).json({status: false, msg: 'Username already Taken'})
 
-       return res.status(200).send('Available')
+       return res.status(200).json({status: true, msg: 'Available'})
 
     }catch(err){
         console.log(`${err} , is the error that occured in the /:username route in the signup .js api`)
-        res.status(500).send('Server error')
+        res.status(500).json({status: false, msg: 'Internal Server Error :('})
     }
 })
 
@@ -65,3 +66,5 @@ router.post('/' , async(req,res) => {
         return res.status(500).send('Server error')
     }
 })
+
+module.exports = router
