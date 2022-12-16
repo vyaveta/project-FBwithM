@@ -6,7 +6,7 @@ const profileSchema = new Schema({
         type: Schema.Types.ObjectId , ref: 'User'
     },
     bio: {
-        type: String , required: true
+        type: String , default:''
     },
     social: {
         youtube: { type: String},

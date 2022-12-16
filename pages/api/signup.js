@@ -31,14 +31,14 @@ router.get('/:username' ,async (req,res) => {
 router.post('/' , async(req,res) => {
     try{
         const {username , name , email , password } = req.body
-        if(!isEmail(email)) return res.status(401).send('Invalid email')
-        if(password.length < 6) return res.status(401).send('Password must be atleast 6 characters')
+        if(!isEmail(email)) return res.status(401).json({status: false, msg: 'Enter a valid email'})
+        if(password.length < 6) return res.status(401).json({status: false, msg: 'Password must be atleast 6 characters'})
 
         let user = await UserModel.findOne({email:email.toLowerCase()})
-        if(user) return res.status(401).send('Account already exists')
+        if(user) return res.status(401).json({status: false, msg: 'Account already exists'})
 
         user = await UserModel.findOne({username:username.toLowerCase()})
-        if(user) return res.status(401).send('Username already taken')
+        if(user) return res.status(401).json({status: false, msg: 'Username already taken'})
 
         user = new UserModel({name,email:email.toLowerCase(), 
             username: username.toLowerCase(), 
@@ -58,12 +58,12 @@ router.post('/' , async(req,res) => {
         const payload = {userId: user._id}
         jwt.sign(payload,process.env.USER_SECRET,{expiresIn:'365d'},(err, token) => {
             if(err) throw err
-            res.status(200).json(token)
+            res.status(200).json({status: true, token})
         })
 
     }catch(err){
         console.log(`${err} , is the error that occured in while creating the user`)
-        return res.status(500).send('Server error')
+        return res.status(500).json({status: false, msg: 'Internal Server Error'})
     }
 })
 

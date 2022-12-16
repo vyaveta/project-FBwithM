@@ -6,7 +6,10 @@ import axios from 'axios';
 import Link from 'next/link';
 import {AiFillEye} from 'react-icons/ai'
 import {AiFillEyeInvisible} from 'react-icons/ai'
+import { userLogin } from '../utils/authUser';
+import { Oval } from 'react-loading-icons';
 
+const EMAIL_REGEX =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 function Login() {
 
@@ -15,6 +18,8 @@ function Login() {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const[showPassword,setShowPassword] = useState(false)
+    const [error,setError] = useState('')
+    const [loading,setLoading] = useState(false)
     const [googleAccount,setGoogleAccount] = useState(false)
 
     const toastOptions =  {
@@ -29,13 +34,29 @@ function Login() {
     }
 
     const handleSubmit = async () => {
+        try{
+            if(!EMAIL_REGEX.test(email)) return setError('Enter a valid email')
+            if(password.trim()==='') return handleError('Seems like you forgot to enter the password')
+            setLoading(true)
+            await userLogin(email,password,setError)
+        }catch(er){
+            console.log(`${er} is the error that occured in the handleSubmit function in the login frontend`)
+            handleError('Oops something went wrong')
+        }finally{
+            setLoading(false)
+        }
     }
     const handleError = (msg) => {
         toast.error(msg,toastOptions)
     }
 
+    useEffect(() => {
+        if(error.trim()==='') return
+        handleError(error)
+    },[error])
+
   return (
-    
+
     <div className={css.login__wrapper}>
         <div className={css.clouds}>
             <img src='/cloud.png' alt="" />
@@ -63,7 +84,12 @@ function Login() {
             }
         </div>
         <div className={css.login__box}>
-            <button className="login__button" onClick={handleSubmit} >Login</button>
+            <button className="login__button" onClick={handleSubmit} >
+                {
+                    loading ? <Oval style={{height:'15px'}} stroke="#1e90ff" strokeWidth={5} speed={.75}  /> :
+                    'Login'
+                }
+            </button>
         </div>
         <div className={css.login__box} id='googleSignIn'></div>
         <div className={css.login__box}>

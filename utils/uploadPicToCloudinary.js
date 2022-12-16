@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const uploadPic = async (media) => {
+const uploadUserProfilePic = async (media) => {
     try{
         const form = new FormData()
         form.append('file' , media)
@@ -15,4 +15,4 @@ const uploadPic = async (media) => {
     }
 }
 
-export default uploadPic
+export default uploadUserProfilePic

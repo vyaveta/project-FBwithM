@@ -16,6 +16,8 @@ import { Oval } from 'react-loading-icons'
 import axios from 'axios';
 import baseUrl from '../utils/baseUrl';
 
+import { registerUser } from '../utils/authUser';
+import uploadUserProfilePic from '../utils/uploadPicToCloudinary';
 
 import ImageDropDiv from '../components/ImageDropDiv';
 
@@ -62,6 +64,8 @@ const Signup = () => {
     const [validUsername,setValidUsername] = useState(false)
     const [usernameLoading,setUsernameLoading] = useState(false)
     const [usernameFocus,setUsernameFocus] = useState(false)
+
+    const [formLoading,setFormLoading] = useState(false)
 
     const [errMsg,setErrMsg] = useState()
 
@@ -118,6 +122,10 @@ const Signup = () => {
     // Now some useEffects
 
     useEffect(() => {
+        if(errMsg!=='') handleError(errMsg)
+    },[errMsg])
+
+    useEffect(() => {
           userRef.current.focus() // This is to make the focus to the input field on rendering the page
     },[])
 
@@ -155,7 +163,21 @@ const Signup = () => {
     },[username])
    
     const handleSubmit = async () => {
-      console.log(user,pwd,email ,' are the values')
+      if(!validEmail  || !validName || !validUsername ) {
+        setFinalSignUpStep(false) 
+        handleError('Enter valid Credentials')
+        return
+      }
+      if(!validPwd || !validMatch) return handleError('Enter valid password')
+      setFormLoading(true)
+      let profilePicUrl
+      if(media!==null) {
+        profilePicUrl = await uploadUserProfilePic(media)
+      }
+      if(media!==null && !profilePicUrl){
+        handleError('Error occured while setting up profile pic')
+      }
+      await registerUser(user,username,email,pwd,profilePicUrl,setErrMsg,setFormLoading)
     }
 
     const checkFinalSignUpStep = () => {
@@ -355,7 +377,12 @@ const Signup = () => {
                 </div>
 
                 <div className={css.login__box}>
-                    <button className="login__button" onClick={handleSubmit} >Complete Sign up<IoIosArrowForward/> </button>
+                    <button className="login__button" onClick={handleSubmit} > 
+                        {
+                            formLoading ? <Oval style={{height:'15px'}} stroke="#1e90ff" strokeWidth={5} speed={.75}  />
+                            : 'Sign up'
+                        }
+                    <IoIosArrowForward/> </button>
                 </div>
                         </div>
                         </>

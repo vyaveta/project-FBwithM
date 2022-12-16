@@ -16,6 +16,7 @@ connectDB()
 nextApp.prepare().then(() => {
 
    app.use('/api/signup' , require('./pages/api/signup'))
+   app.use('/api/auth' , require('./pages/api/auth'))
 
     app.all('*' , (req,res) => handle(req,res))
     server.listen(PORT, err => {
