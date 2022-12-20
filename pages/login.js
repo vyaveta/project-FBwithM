@@ -38,7 +38,7 @@ function Login() {
             if(!EMAIL_REGEX.test(email)) return setError('Enter a valid email')
             if(password.trim()==='') return handleError('Seems like you forgot to enter the password')
             setLoading(true)
-            await userLogin(email,password,setError)
+            await userLogin(email,password,setError,handleError)
         }catch(er){
             console.log(`${er} is the error that occured in the handleSubmit function in the login frontend`)
             handleError('Oops something went wrong')

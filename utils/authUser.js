@@ -29,12 +29,12 @@ export const registerUser = async (name , username, email, password, profilePicU
     }
 }
 
-export const userLogin = async (email,password,setError) => {
+export const userLogin = async (email,password,setError,handleError) => {
     try{
         console.log(email,' is the email')
         const {data} = await axios.post(userLoginRoute,{email , password})
         console.log(data,'is the data')
-        if(!data.status) return setError(data.msg)
+        if(!data.status) return handleError(data.msg)
         console.log('Login success')
         return setToken(data.token)
     }catch(err){

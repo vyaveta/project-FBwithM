@@ -1,9 +1,21 @@
 const express = require('express')
 const router = express.Router()
 const UserModel = require('../../models/UserModel')
+const FollowerModel = require('../../models/FollowerModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const isEmail = require('validator/lib/isEmail')
+const userAuthMiddleware = require('../../middlewares/userAuthMiddleware')
+
+router.get('/' ,userAuthMiddleware,async (req,res) => {
+    try{
+        const user = await UserModel.findById(req.userId)
+        const userFollowStats = await FollowerModel.findOne({user: req.userId})
+        return res.status(200).json({status: true,user , userFollowStats})
+    }catch(er){
+        console.log(`${er} is the error that has occured in the get method of the auth fil`)
+    }
+})
 
 router.post('/' , async (req,res) => {
     try{
