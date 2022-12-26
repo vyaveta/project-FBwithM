@@ -53,4 +53,4 @@ const UserSchema = new Schema({
      } // This reset token and expire token is used to reset the user password.
 }, {timestamps: true})
 
-module.exports = mongoose.model('User' , UserSchema)
+module.exports =  mongoose.model('User' , UserSchema)

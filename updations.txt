@@ -10,3 +10,6 @@
 
 #updation 6
 * Userlogin and Signup done
+
+#updation 7
+*working on getInitialProps

@@ -42,3 +42,12 @@ export const userLogin = async (email,password,setError,handleError) => {
         return setError('Oops Something went wrong!')
     }
 }
+export const userCheckGetRequest = async(FreeBirdUserToken) => {
+    try{
+        const res = await axios.get(userLoginRoute,{headers:{userAuth:FreeBirdUserToken}})
+        console.log(res,'is the res from axios')
+        return res
+    }catch(e){
+        console.log(err,'is the error')
+    }
+}
