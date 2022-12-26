@@ -1,4 +1,5 @@
 import HeadTags from '../components/metaData/HeadTags'
+import App from "next/app";
 import '../styles/globals.css'
 import nProgress from "nprogress";
 import Router from "next/router";
@@ -30,7 +31,12 @@ function MyApp({ Component, pageProps }) {
 MyApp.getInitialProps = async({Component,ctx}) => {
   // try{
     const {FreeBirdUserToken} = parseCookies(ctx)
-    const protectedRoutes = ctx.pathname === '/'
+    const protectedRoutes = ctx.pathname === '/' ||
+    ctx.pathname === '/[username]' ||
+    ctx.pathname === '/notifications' ||
+    ctx.pathname === '/post/[postId]' ||
+    ctx.pathname === '/messages' ||
+    ctx.pathname === '/search' 
     let pageProps = {}
 
     if(!FreeBirdUserToken){
@@ -40,7 +46,7 @@ MyApp.getInitialProps = async({Component,ctx}) => {
 
       try{
         const res = await axios.post(`${baseUrl}/api/getUserDetails`)
-        console.log(res,'is the res from axios')
+        // console.log(res.data,'is the res from axios')
         const {user,userFollowStats} = res.data
         if(user && !protectedRoutes) pageNavigation(ctx,'/') // If the user is already logged in and tries to access login/signup page it will redirect user to the home page
         pageProps.user = user
@@ -58,3 +64,54 @@ MyApp.getInitialProps = async({Component,ctx}) => {
 }
 
 export default MyApp
+
+// class MyApp extends App {
+//   static async getInitialProps({ Component, ctx }) {
+//     const { FreeBirdUserToken } = parseCookies(ctx);
+//     let pageProps = {};
+
+//     const protectedRoutes = ctx.pathname === "/";
+
+//     if (!FreeBirdUserToken) {
+//       protectedRoutes && pageNavigation(ctx, "/login");
+//     }
+//     //
+//     else {
+//       if (Component.getInitialProps) {
+//         pageProps = await Component.getInitialProps(ctx);
+//       }
+
+//       try {
+//         const res = await axios.post(`${baseUrl}/api/getUserDetails`)
+//         console.log(res.data,'is the data')
+
+//         const { user, userFollowStats } = res.data;
+
+//         if (user) !protectedRoutes && pageNavigation(ctx, "/");
+
+//         pageProps.user = user;
+//         pageProps.userFollowStats = userFollowStats;
+//       } catch (error) {
+//         console.log(error,'is the error')
+//         destroyCookie(ctx, "FreebordUserToken");
+//         pageNavigation(ctx,'/login')
+//       }
+//     }
+
+//     return { pageProps };
+//   }
+
+//   render() {
+//     const { Component, pageProps } = this.props;
+
+//     return (
+//          <>
+//     <HeadTags />
+//     <Component {...pageProps} />
+//     <ToastContainer />
+//     </>
+//     );
+//   }
+// }
+
+// export default MyApp;

@@ -7,8 +7,22 @@ import { useEffect } from 'react'
 import nookies from 'nookies'
 import { userCookieCheck } from '../utils/userCookieCheck'
 import { pageNavigation } from '../utils/pageNavigation'
+import baseUrl from '../utils/baseUrl'
 
 export default function Home({user,userFollowStats}) {
+
+  const getUserData = async() => {
+    const {data} = await axios.post(`${baseUrl}/api/getUserDetails`)
+    if(data.status) {
+      user = data.user
+      userFollowStats = data.userFollowStats
+    }
+    console.log(user,userFollowStats)
+  }
+
+  useEffect(() => {
+    if(!user) getUserData()
+  },[])
     console.log(user,'is the user and userFollowStats are' , userFollowStats)
   return (
     <div className={styles.container}>
@@ -21,9 +35,9 @@ export default function Home({user,userFollowStats}) {
 
 // Home.getInitialProps = async (ctx) => {
 //   try{
-//     const res = await axios.get('https://jsonplaceholder.typicode.com/posts',{ 
-//       headers: { "Accept-Encoding": "gzip,deflate,compress" } 
-//   })
+//    const res = await axios.get('http://localhost:3000/api/auth/')
+   
+//     // console.log(res.data,'is the last hope!')
 //     return {posts: res.data}
 //   }catch(e){
 //     console.log(e)

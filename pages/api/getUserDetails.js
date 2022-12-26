@@ -12,12 +12,12 @@ const userAuthMiddleware = require('../../middlewares/userAuthMiddleware')
 
 router.post('/' ,userAuthMiddleware,async (req,res) => {
     try{
-        console.log(req,'is the req')
+        // console.log(req,'is the req')
         const {userId} = req
         console.log(req.userId,'is the req')
         const user = await UserModel.findById(userId)
         const userFollowStats = await FollowerModel.findOne({user:userId})
-        console.log(user,'is the user')
+        // console.log(user,'is the user')
         return res.status(200).json({status: true,user , userFollowStats})
     }catch(er){
         console.log(`${er} is the error that has occured in the get method of the auth fil`)
