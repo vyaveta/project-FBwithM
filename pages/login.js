@@ -8,6 +8,7 @@ import {AiFillEye} from 'react-icons/ai'
 import {AiFillEyeInvisible} from 'react-icons/ai'
 import { userLogin } from '../utils/authUser';
 import { Oval } from 'react-loading-icons';
+import Cookies from 'js-cookie';
 
 const EMAIL_REGEX =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -54,6 +55,12 @@ function Login() {
         if(error.trim()==='') return
         handleError(error)
     },[error])
+
+    useEffect(()=> {
+        document.title='Welcome back Bird'
+        const userEmail = Cookies.get('userEmail')
+        if(userEmail) setEmail(userEmail)
+    },[])
 
   return (
 

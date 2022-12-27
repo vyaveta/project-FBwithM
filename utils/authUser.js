@@ -51,3 +51,13 @@ export const userCheckGetRequest = async(FreeBirdUserToken) => {
         console.log(err,'is the error')
     }
 }
+
+export const userLogout = email => {
+    try{
+    Cookies.set('userEmail',email)
+    Cookies.remove('FreeBirdUserToken')
+    Router.push('/login')
+    }catch(e){
+        console.log(e,'is the error in the user logout ')
+    }
+}

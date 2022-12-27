@@ -17,23 +17,25 @@ export default function Home({user,userFollowStats}) {
   const [theuserFollowStats,setUserFollowStats] = useState('')
 
 
+
   const getUserData = async() => {
     const {data} = await axios.post(`${baseUrl}/api/getUserDetails`)
     if(data.status) {
       user = data.user
-      user.unreadMessage=true
-      user.unreadNotification=true
       userFollowStats = data.userFollowStats
       setUser(user)
       setUserFollowStats(userFollowStats)
       document.title = `Welcome ${user.name}`
     }
-    console.log(user,userFollowStats)
+    console.log(user,'is the user')
   }
 
   useEffect(() => {
     if(!user) getUserData()
-    
+    else {
+      setUser(user)
+      setUserFollowStats(userFollowStats)
+    }
   },[])
     console.log(user,'is the user and userFollowStats are' , userFollowStats)
 
