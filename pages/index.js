@@ -1,34 +1,51 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import HeadTags from '../components/metaData/HeadTags'
-import styles from '../styles/Home.module.css'
+import css from '../styles/Index.module.css'
 import axios from 'axios'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import nookies from 'nookies'
 import { userCookieCheck } from '../utils/userCookieCheck'
 import { pageNavigation } from '../utils/pageNavigation'
 import baseUrl from '../utils/baseUrl'
+import Sidemenu from '../components/Sidemenu/Sidemenu'
+import HomeScrollArea from '../components/HomeScrollArea/HomeScrollArea'
+import Search from '../components/Search/Search'
 
 export default function Home({user,userFollowStats}) {
+  const [theuser,setUser] = useState('')
+  const [theuserFollowStats,setUserFollowStats] = useState('')
+
 
   const getUserData = async() => {
     const {data} = await axios.post(`${baseUrl}/api/getUserDetails`)
     if(data.status) {
       user = data.user
+      user.unreadMessage=true
+      user.unreadNotification=true
       userFollowStats = data.userFollowStats
+      setUser(user)
+      setUserFollowStats(userFollowStats)
+      document.title = `Welcome ${user.name}`
     }
     console.log(user,userFollowStats)
   }
 
   useEffect(() => {
     if(!user) getUserData()
+    
   },[])
     console.log(user,'is the user and userFollowStats are' , userFollowStats)
+
+
   return (
-    <div className={styles.container}>
+    <div className={css.container}>
      <HeadTags />
-     <h1>Free bird</h1>
-     
+     <Sidemenu user={theuser} />
+     <HomeScrollArea>
+      hello
+     </HomeScrollArea>
+     <Search />
     </div>
   )
 }

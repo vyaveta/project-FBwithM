@@ -14,14 +14,26 @@ import { userCheckGetRequest } from '../utils/authUser';
 import baseUrl from '../utils/baseUrl';
 
 function MyApp({ Component, pageProps }) {
-  
+
   Router.onRouteChangeStart = () => nProgress.start()
   Router.onRouteChangeComplete = () => nProgress.done()
   Router.onRouteChangeError = () => nProgress.done()
 
+  useEffect(() => {
+     let title = document.title
+  window.addEventListener('blur' , () => {
+    document.title = 'Come back :('
+  })
+  window.addEventListener('focus' , () => {
+    document.title = title
+  })
+  },[])
+
   return (
     <>
     <HeadTags />
+    <div className='blurBubble bubble1' ></div>
+    <div className='blurBubble bubble2' style={{top:'3rem' , right:'1rem'}}></div>
     <Component {...pageProps} />
     <ToastContainer />
     </>

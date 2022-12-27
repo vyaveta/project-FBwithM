@@ -16,3 +16,6 @@
 
 #updation 8
 * now collects the user data using the axios req in the useEffect
+
+#updation 9 
+* Working on Home page
