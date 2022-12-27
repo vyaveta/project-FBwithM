@@ -1,7 +1,6 @@
 import React from 'react'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Form, Segment, Image, Icon , Header } from 'semantic-ui-react'
 import { useRef } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';

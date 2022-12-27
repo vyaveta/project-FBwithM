@@ -44,9 +44,6 @@ a {
 .borderRadius50{
   border-radius: 50%;
 }
-
-
-
 .hide{
   visibility: hidden;
 }
@@ -72,6 +69,7 @@ a {
   justify-content: space-evenly;
 }
 
+
 .blurBubble{
   position: absolute;
   height: 10rem;
@@ -79,7 +77,6 @@ a {
   border-radius: 50%;
   background-color: var(--blue);
   z-index: 0;
- 
 }
 .bubble1{
   filter: blur(100px);

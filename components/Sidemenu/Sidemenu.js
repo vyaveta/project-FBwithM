@@ -20,7 +20,7 @@ const Sidemenu = ({user:{unreadMessage,unreadNotification,username,email}}) => {
 
   const isActive = route => router.pathname === route // This is a function that check if the router 
   return (
-    <div className={`${css.container} ${css.dark}`}>
+    <div className={`${css.container} ${css.light}`}>
       <div className={`${css.title}`}>
         <GiHummingbird className={`${css.logo}`} />
       <h1>Freebird</h1>

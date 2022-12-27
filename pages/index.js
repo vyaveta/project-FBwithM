@@ -37,7 +37,7 @@ export default function Home({user,userFollowStats}) {
       setUserFollowStats(userFollowStats)
     }
   },[])
-    console.log(user,'is the user and userFollowStats are' , userFollowStats)
+  console.log(user,'is the user and userFollowStats are' , userFollowStats)
 
 
   return (

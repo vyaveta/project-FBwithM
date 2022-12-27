@@ -18,6 +18,7 @@ nextApp.prepare().then(() => {
    app.use('/api/signup' , require('./pages/api/signup'))
    app.use('/api/auth' , require('./pages/api/auth'))
    app.use('/api/getUserDetails' , require('./pages/api/getUserDetails'))
+   app.use('/api/search' , require('./pages/api/search'))
 
     app.all('*' , (req,res) => handle(req,res))
     server.listen(PORT, err => {
