@@ -11,11 +11,11 @@ module.exports =  (req,res,next) => {
         if(!parsedCookies.FreeBirdUserToken) return res.redirect('/login')
         const {userId} = jwt.verify(c,process.env.USER_SECRET)
         req.userId = userId
-
+        console.log(userId)
         //This code do require headers in the get request
 
-        // if(!req.headers.userAuth)  return res.redirect('/login')
-        // const {userId} =  jwt.verify(req.headers.userAuth,process.env.USER_SECRET)
+        // if(!req.headers.FreeBirdUserToken)  return res.redirect('/login')
+        // const {userId} =  jwt.verify(req.headers.FreeBirdUserToken,process.env.USER_SECRET)
         // console.log(userId,'is the userId from middleware')
         // req.userId = userId
          next()

@@ -29,3 +29,6 @@
 #updation 12 
 * implemented redux state management
 * Darkmode and LightMode Done
+
+#updation 13 
+* Setted up the backend routes for posts, i.e like,comment,create,delete etc
