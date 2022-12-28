@@ -25,3 +25,7 @@
 
 #updation 11
 * added search feature
+
+#updation 12 
+* implemented redux state management
+* Darkmode and LightMode Done

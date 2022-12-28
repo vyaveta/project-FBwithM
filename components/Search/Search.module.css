@@ -9,7 +9,7 @@
     align-items: center;
 }
 .dark{
-    background-color: var(--black);
+    background: linear-gradient(to bottom, #333,var(--black) , var(--black), var(--black));
     color: var(--white);
 }
 .box{

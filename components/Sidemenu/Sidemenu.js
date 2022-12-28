@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect , useState } from 'react'
 import css from './Sidemenu.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -9,18 +9,34 @@ import {IoMdNotificationsOutline} from 'react-icons/io'
 import {VscAccount} from 'react-icons/vsc'
 import {HiLogout} from 'react-icons/hi'
 import { userLogout } from '../../utils/authUser'
+import {MdDarkMode} from 'react-icons/md'
+import {MdLightMode} from 'react-icons/md'
+import Cookies from 'js-cookie'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeColorMode } from '../../slices/darkModeSlice'
 
 const Sidemenu = ({user:{unreadMessage,unreadNotification,username,email}}) => {
+
+  const [darkMode,setDarkMode] = useState(false)
+  const dispatch = useDispatch()
+
   console.log(unreadMessage,'is the msg')
   const router = useRouter()
 
-  const logout = () => {
-    
+  useEffect(() => {
+    const isDarkmode = Cookies.get('FreeBirdDarkMode') === true || Cookies.get('FreeBirdDarkMode') === 'true'
+    if(isDarkmode) setDarkMode(isDarkmode)
+  },[])
+
+  const changeColorModeFunction = () => {
+    Cookies.set('FreeBirdDarkMode',!darkMode)
+    setDarkMode(!darkMode)
+    dispatch(changeColorMode())
   }
 
   const isActive = route => router.pathname === route // This is a function that check if the router 
   return (
-    <div className={`${css.container} ${css.light}`}>
+    <div className={darkMode ? `${css.container} ${css.dark}`: `${css.container} ${css.light}`}>
       <div className={`${css.title}`}>
         <GiHummingbird className={`${css.logo}`} />
       <h1>Freebird</h1>
@@ -43,6 +59,14 @@ const Sidemenu = ({user:{unreadMessage,unreadNotification,username,email}}) => {
       onClick={() => userLogout(email)}
       >
         <h3>Logout</h3><HiLogout className={`${css.subLogo}`} />
+      </div>
+      <div className={css.darkmodeBox}>
+        <button className={darkMode ? `${css.darkmode}` : css.lightmode} onClick={changeColorModeFunction}> 
+         {
+          darkMode ? <MdDarkMode/> : 
+           <MdLightMode />
+         }
+       </button>
       </div>
     </div>
   )

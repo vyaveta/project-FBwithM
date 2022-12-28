@@ -81,6 +81,7 @@ a {
 .bubble1{
   filter: blur(100px);
   background-color: var(--primaryColor);
+  z-index: 4;
   /* animation: blurmovements 12s linear infinite; */
 }
 .bubble2{

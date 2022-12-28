@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import css from './Search.module.css'
-import Image from 'next/image'
 import axios from 'axios'
-import Cookies from 'js-cookie'
-import Router from 'next/router'
+import { useSelector, useDispatch } from 'react-redux'
 import { searchUsersRoute } from '../../utils/userRoutes'
 
 let cancelUserSearch; // This variable is used to cancel the axios search user request if the request is pending
@@ -11,9 +9,19 @@ let cancelUserSearch; // This variable is used to cancel the axios search user r
 
 const Search = () => {
 
+  const darkmode = useSelector((state) => state.darkmode.value)
+
   const [text,setText] = useState('')
   const [loading,setLoading] = useState(false)
   const [results,setResults] = useState([])
+  const [isDarkmode,setIsDarkMode] = useState()
+
+  useEffect(() => {
+    setIsDarkMode(darkmode)
+  },[])
+  useEffect(() => {
+    setIsDarkMode(darkmode)
+  },[darkmode])
 
   //functions
   const handleChange = async text => {
@@ -29,15 +37,17 @@ const Search = () => {
       console.log(e)
     }
   }
-
+  useEffect(() => {
+    if(text.trim()==='') setResults([])
+  },[text])
   return (
-    <div className={`${css.container} ${css.light} `} >
+    <div className={isDarkmode ? `${css.container} ${css.dark} ` : `${css.container} ${css.light} `} >
       <div className={css.box}>
         <input placeholder='Search for Users' 
-        onBlur={() => {
-          setResults([])
-          setText('')
-        }}
+        // onBlur={() => {
+        //   setResults([])
+        //   setText('')
+        // }}
         value={text}
         onChange={(e) => handleChange(e.target.value)}
         />

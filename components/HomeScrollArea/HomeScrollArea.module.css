@@ -1,7 +1,8 @@
 .container{
     width: 55vw;
-    background-color: blue;
     height: 100vh;
+    background: aliceblue;
+    color: #333;
     overflow: scroll;
 }
 .container::-webkit-scrollbar {
@@ -9,12 +10,16 @@
   }
 
 .light{
-    background-color: aliceblue;
+    background: aliceblue;
     color: #333;
 }
 .dark{
-    /* background-color: var(--black); */
+    width: 55vw;
+    height: 100vh;
     background: linear-gradient(to bottom, #333,var(--black) , var(--black), var(--black));
-    /* background-color: #333; */
     color: aliceblue;
+    overflow: scroll;
+}
+.dark::-webkit-scrollbar{
+    display: none;
 }

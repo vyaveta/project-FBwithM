@@ -7,17 +7,20 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 1rem;
+    position: relative;
 }
-.light{
+
+.light {
     background-color: var(--white);
     color: var(--primaryDark) !important;
 }
 
-.dark{
+.dark {
     background-color: var(--black);
     color: var(--white);
 }
-.title{
+
+.title {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -25,7 +28,8 @@
     color: var(--primaryLight);
     font-family: var(--cursiveFont);
 }
-.box{
+
+.box {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -37,15 +41,18 @@
     height: 3rem;
     /* border-bottom: 3px solid red; */
 }
-.logo{
+
+.logo {
     height: 2rem;
     width: 2rem;
 }
-.subLogo{
+
+.subLogo {
     height: 1.5rem;
     width: 1.5rem;
 }
-.dot{
+
+.dot {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -55,7 +62,8 @@
     cursor: pointer;
     position: relative;
 }
-.dot::before{
+
+.dot::before {
     content: '';
     height: 0.5rem;
     width: 0.5rem;
@@ -66,7 +74,45 @@
     top: 25%;
     right: 10%;
 }
-.active{
+
+.active {
     border: 2px solid var(--blue);
     border-radius: 1rem;
+}
+
+.darkmode {
+    width: 80px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 2.2rem;
+    border-radius: 1.2rem;
+    border: none;
+    background: var(--primaryDark);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+.lightmode{
+    width: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 2.2rem;
+    border-radius: 1.2rem;
+    border: none;
+    background: var(--primaryDark);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.darkmodeBox {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -13,6 +13,9 @@ import { useEffect } from 'react';
 import { userCheckGetRequest } from '../utils/authUser';
 import baseUrl from '../utils/baseUrl';
 
+import { store } from '../store'
+import { Provider } from 'react-redux'
+
 function MyApp({ Component, pageProps }) {
 
   Router.onRouteChangeStart = () => nProgress.start()
@@ -30,13 +33,13 @@ function MyApp({ Component, pageProps }) {
   },[])
 
   return (
-    <>
+    <Provider store={store}>
     <HeadTags />
     <div className='blurBubble bubble1' ></div>
     <div className='blurBubble bubble2' style={{top:'3rem' , right:'1rem'}}></div>
     <Component {...pageProps} />
     <ToastContainer />
-    </>
+    </Provider>
   )
 }
 
