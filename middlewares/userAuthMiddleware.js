@@ -2,13 +2,18 @@ const jwt = require('jsonwebtoken')
 // const Router = require('next/router')
 const { parseCookies, setCookie, destroyCookie } = require('nookies')
 
-module.exports =  (req,res,next) => {
+module.exports = (req,res,next) => {
     try{
         console.log('got inside middleware ')
         // this code doesnt require headers in the get request thats why im using this
-        const parsedCookies = parseCookies({ req });
+        // console.log(req,'is the req')
+        const parsedCookies =  parseCookies({ req });
+        console.log(parsedCookies,'is the cookies')
         const c = parsedCookies.FreeBirdUserToken
-        if(!parsedCookies.FreeBirdUserToken) return res.redirect('/login')
+        if(!parsedCookies.FreeBirdUserToken) {
+            console.log('no fb token')
+            return res.redirect('/login')
+        }
         const {userId} = jwt.verify(c,process.env.USER_SECRET)
         req.userId = userId
         console.log(userId)

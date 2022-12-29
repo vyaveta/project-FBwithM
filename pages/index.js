@@ -11,6 +11,10 @@ import baseUrl from '../utils/baseUrl'
 import Sidemenu from '../components/Sidemenu/Sidemenu'
 import HomeScrollArea from '../components/HomeScrollArea/HomeScrollArea'
 import Search from '../components/Search/Search'
+import { getAllPostsRoute } from '../utils/userRoutes'
+import cookie from "js-cookie";
+import { parseCookies } from "nookies";
+
 
 export default function Home({user,userFollowStats}) {
   const [theuser,setUser] = useState('')
@@ -52,14 +56,17 @@ export default function Home({user,userFollowStats}) {
   )
 }
 
-// Home.getInitialProps = async (ctx) => {
-//   try{
-//    const res = await axios.get('http://localhost:3000/api/auth/')
-   
-//     // console.log(res.data,'is the last hope!')
-//     return {posts: res.data}
-//   }catch(e){
-//     console.log(e)
-//     return {errorLoading: true}
-//   }
-// }
+Home.getInitialProps = async (ctx) => {
+  try{
+    const { FreeBirdUserToken } = parseCookies(ctx);
+    console.log(FreeBirdUserToken,'is the token')
+    const {data} = await axios.get(`${baseUrl}/api/posts`, {
+      headers: { FreeBirdUserToken: FreeBirdUserToken }
+    });
+    console.log(data,'is the data')
+    return { error: false}
+  }catch(e){
+    console.log(e,'is the error in home getinitial props')
+    return {error: true}
+  }
+}

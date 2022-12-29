@@ -2,6 +2,7 @@ const express = require('express')
 const { default: mongoose } = require('mongoose')
 const router = express.Router()
 const userAuthMiddleware = require('../../middlewares/userAuthMiddleware')
+const userAuthMiddlewareViaHeaders = require('../../middlewares/userAuthMiddlewareViaHeaders')
 let UserModel
 let PostModel 
 // const FollowerModel = require('../../models/FollowerModel') 
@@ -39,7 +40,7 @@ router.post('/',async(req,res) => {
 })
 
 //Get all Posts
-router.get('/',userAuthMiddleware, async(req,res) => {
+router.get('/',userAuthMiddlewareViaHeaders, async(req,res) => {
     try{
         const posts = await PostModel.find().sort({createdAt: -1}).populate('user').populate('comments.user')
         return res.json({status: true, posts})

@@ -32,3 +32,6 @@
 
 #updation 13 
 * Setted up the backend routes for posts, i.e like,comment,create,delete etc
+
+#updation 14 
+***** SOLVED THE getInitialProps props data fetching error / reason for the error - the keys in the header will always be a lower case strings.

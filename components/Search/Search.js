@@ -60,7 +60,10 @@ const Search = () => {
                <div className={css.searchResultImageBox}>
                 <img src={user.profilePicUrl} height='50px' width='50px' className='borderRadius50' style={{cursor:'pointer', objectFit:'cover'}}  />
                </div>
-               <div className={css.searchResultsNameBox}>{user.username}</div>
+               <div className={css.searchResultsNameBox}>
+                <h4 className='padding-0 margin-0'>{user.username}</h4>
+                <p className={`color-grey padding-0 margin-0 fontsize-09`} >{user.name}</p>
+               </div>
              </div>
           </>
         })
