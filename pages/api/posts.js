@@ -51,7 +51,7 @@ router.get('/',userAuthMiddlewareViaHeaders, async(req,res) => {
 })
 
 //Get post by Id
-router.get('/:postId',userAuthMiddleware,async(req,res) => {
+router.get('/:postId',userAuthMiddlewareViaHeaders,async(req,res) => {
     try{
         const post = await PostModel.findById(req.params.postId).populate('user').populate('comments.user')
         if(!post) return res.json({status: false,msg: 'Post not Found!'})
@@ -63,7 +63,7 @@ router.get('/:postId',userAuthMiddleware,async(req,res) => {
 })
 
 //Delete Post
-router.delete('/:postId',userAuthMiddleware,async(req,res) => {
+router.delete('/:postId',userAuthMiddlewareViaHeaders,async(req,res) => {
     try{
         const {userId} = req
         const {postId} = req.params
@@ -116,13 +116,14 @@ router.post('/unlike/:postId',userAuthMiddleware,async(req,res) => {
         const index = post.likes.map((like=> like.user.toString())).indexOf(userId)
         await post.likes.splice(index,1)
         await post.save()
+        return res.json({status: true,msg:'Post unliked!'})
     }catch(e){
         console.log(e,'is the error occured while running the backend code for unliking the post')
     }
 })
 
 //Get all likes
-router.get('/like/:postId',userAuthMiddleware,async(req,res) => {
+router.get('/like/:postId',userAuthMiddlewareViaHeaders,async(req,res) => {
     try{
         const { postId } = req.params
         const post = await PostModel.findById(postId).populate('likes.user')
@@ -135,7 +136,7 @@ router.get('/like/:postId',userAuthMiddleware,async(req,res) => {
 })
 
 //Comment on a Post
-router.post('/comment/:postId',userAuthMiddleware,async(req,res) => {
+router.post('/comment/:postId',userAuthMiddlewareViaHeaders,async(req,res) => {
     try{
         const {postId} = req.params
         const {userId} = req
@@ -159,7 +160,7 @@ router.post('/comment/:postId',userAuthMiddleware,async(req,res) => {
 })
 
 //Delete a Comment
-router.delete('/:commentId/:postId',userAuthMiddleware,async(req,res) => {
+router.delete('/:commentId/:postId',userAuthMiddlewareViaHeaders,async(req,res) => {
     try{
         const {postId,commentId} = req.params
         const {userId} = req

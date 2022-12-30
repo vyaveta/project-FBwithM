@@ -1,0 +1,86 @@
+.container{
+    width: 90%;
+    min-height: 20vh;
+    background: var(--white);
+    border: 1.5px solid var(--darkText);
+    border-radius: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px 5px;
+    padding: 1rem;
+    
+}
+.container:hover{
+    box-shadow: 1px 1px 5px 1px var(--darkText);
+}
+.dark{
+    background: var(--darkText);
+    color: var(--white);
+}
+.box{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height:100%;
+}
+.postMetaLeft{
+    width: 50%;
+    height: 100%;
+    padding:5px 3px;
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.postMetaRight{
+    height: 100%;
+    width: 50%;
+    padding: 5px 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    font-weight: 500;
+    font-size: 1rem;
+}
+.userDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    /* background-color: orange; */
+    height: 100%;
+}
+.userDetails h4,.userDetails h5{
+    margin: 0;
+}
+.userProfileImg{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.line{
+    width: 100%;
+    height: 2px;
+    background-color: black;
+}
+.actions{
+    width: 100%;
+    padding-top: .5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.icon{
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}

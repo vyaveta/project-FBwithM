@@ -6,13 +6,13 @@ module.exports = (req,res,next) => {
     try{
         console.log('got inside middleware ')
         // this code doesnt require headers in the get request thats why im using this
-        // console.log(req,'is the req')
+        console.log(req,'is the req')
         const parsedCookies =  parseCookies({ req });
         console.log(parsedCookies,'is the cookies')
         const c = parsedCookies.FreeBirdUserToken
         if(!parsedCookies.FreeBirdUserToken) {
-            console.log('no fb token')
-            return res.redirect('/login')
+            console.log('no fbu token')
+            return res.json({status: false,msg:'Failed to find freebird cookie in the req'})
         }
         const {userId} = jwt.verify(c,process.env.USER_SECRET)
         req.userId = userId
@@ -26,6 +26,6 @@ module.exports = (req,res,next) => {
          next()
     }catch(err){
         console.log(`${err} is the error in the user auth middleware`)
-        return res.redirect('/login')
+        return res.json({status: false,msg:'error occured in the auth middleware',error: err})
     }
 }

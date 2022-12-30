@@ -3,4 +3,7 @@ import baseUrl from "./baseUrl"
 export const userSignupRoute = `${baseUrl}/api/signup/`
 export const userLoginRoute = `${baseUrl}/api/auth/`
 export const searchUsersRoute = `${baseUrl}/api/search`
+
 export const getAllPostsRoute = `${baseUrl}/api/posts`
+export const RouteForLikingAPost = `${baseUrl}/api/posts/like`
+export const RouteForUnLikingAPost = `${baseUrl}/api/posts/unlike`

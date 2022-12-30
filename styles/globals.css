@@ -8,6 +8,7 @@
   --primaryDark: #2E0249;
   --primaryLight: #F806CC;
   --cursiveFont:  'Marck Script', cursive;
+  --greyWhite: 	 #e6e6e6;
 }
 .light{
   color: var(--darkText)
@@ -67,6 +68,18 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+.dark__button{
+    padding: .6rem .8rem;
+    border:none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: var(--primaryDark);
+    background-size: 26rem 5rem;
+    border-radius: 0.6rem;
+    color: whitesmoke;
+    box-shadow: 0px 0px 5px 0.1px var(--white);
 }
 .padding-0{
   padding: 0;

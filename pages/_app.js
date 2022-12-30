@@ -60,7 +60,9 @@ MyApp.getInitialProps = async({Component,ctx}) => {
       if(Component.getInitialProps) pageProps = await Component.getInitialProps(ctx)
 
       try{
-        const res = await axios.post(`${baseUrl}/api/getUserDetails`)
+        const res = await axios.get(userLoginRoute, {
+          headers: { FreeBirdUserToken: FreeBirdUserToken }
+        })
         // console.log(res.data,'is the res from axios')
         const {user,userFollowStats} = res.data
         if(user && !protectedRoutes) pageNavigation(ctx,'/') // If the user is already logged in and tries to access login/signup page it will redirect user to the home page

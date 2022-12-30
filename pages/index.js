@@ -14,15 +14,18 @@ import Search from '../components/Search/Search'
 import { getAllPostsRoute } from '../utils/userRoutes'
 import cookie from "js-cookie";
 import { parseCookies } from "nookies";
+import CreatePost from '../components/Posts/CreatePost'
+import CardPost from '../components/Posts/CardPost'
 
-
-export default function Home({user,userFollowStats}) {
+export default function Home({user,userFollowStats,postsData}) {
+  // console.log(user,'is the user from the index page and its working now ')
+  // console.log(postsData)
   const [theuser,setUser] = useState('')
   const [theuserFollowStats,setUserFollowStats] = useState('')
 
 
 
-  const getUserData = async() => {
+  const getUserData = async() => { // this useEffect is used just in case if the user data is not loaded by the app.js it will collect the user data _Note** this will only work when the _app.js fails to pass user data
     const {data} = await axios.post(`${baseUrl}/api/getUserDetails`)
     if(data.status) {
       user = data.user
@@ -31,7 +34,6 @@ export default function Home({user,userFollowStats}) {
       setUserFollowStats(userFollowStats)
       document.title = `Welcome ${user.name}`
     }
-    console.log(user,'is the user')
   }
 
   useEffect(() => {
@@ -39,9 +41,10 @@ export default function Home({user,userFollowStats}) {
     else {
       setUser(user)
       setUserFollowStats(userFollowStats)
+      document.title = `Welcome ${user.name}`
     }
   },[])
-  console.log(user,'is the user and userFollowStats are' , userFollowStats)
+  // console.log(user,'is the user and userFollowStats are' , userFollowStats)
 
 
   return (
@@ -49,22 +52,28 @@ export default function Home({user,userFollowStats}) {
      <HeadTags />
      <Sidemenu user={theuser} />
      <HomeScrollArea>
-      hello
+      <CreatePost />
+      <br />
+      {
+        postsData.length>0 && postsData.map((post,index) => {
+          return <CardPost key={index} post={post} user={user} />
+        })
+      }
      </HomeScrollArea>
      <Search />
     </div>
   )
 }
 
-Home.getInitialProps = async (ctx) => {
+Home.getInitialProps = async (ctx) => { 
   try{
     const { FreeBirdUserToken } = parseCookies(ctx);
-    console.log(FreeBirdUserToken,'is the token')
-    const {data} = await axios.get(`${baseUrl}/api/posts`, {
+    // console.log(FreeBirdUserToken,'is the token')
+    const {data} = await axios.get(getAllPostsRoute, {
       headers: { FreeBirdUserToken: FreeBirdUserToken }
     });
-    console.log(data,'is the data')
-    return { error: false}
+   
+    return { postsData: data.posts}
   }catch(e){
     console.log(e,'is the error in home getinitial props')
     return {error: true}

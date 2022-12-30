@@ -35,3 +35,7 @@
 
 #updation 14 
 ***** SOLVED THE getInitialProps props data fetching error / reason for the error - the keys in the header will always be a lower case strings.
+
+#updation 15
+* Added posts (without image) 
+* added like and unlike feature to the post.

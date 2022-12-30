@@ -3,7 +3,7 @@ import css from './HomeScrollArea.module.css'
 import { useSelector, useDispatch } from 'react-redux'
 // import { decrement, increment } from './counterSlice'
 
-const HomeScrollArea = () => {
+const HomeScrollArea = ({children}) => {
   const darkmode = useSelector((state) => state.darkmode.value)
   const [isDarkMode,setIsDarkMode] = useState(true)
 
@@ -15,7 +15,7 @@ const HomeScrollArea = () => {
   },[darkmode])
   return (
     <div className={isDarkMode ? `${css.dark}` : `${css.container}`} >
-      
+      {children}
     </div>
   )
 }
