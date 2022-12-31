@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react'
 import css from '../../styles/components/CardPost.module.css'
 import {FcLikePlaceholder} from 'react-icons/fc'
 import {FcLike} from 'react-icons/fc'
+import {AiOutlineComment} from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { RouteForLikingAPost, RouteForUnLikingAPost } from '../../utils/userRoutes'
 import Cookies from 'js-cookie'
+import { calculateTime } from '../../utils/calculateTime'
+import PostComments from './PostComments'
 
 const CardPost = ({post,user}) => {
   const [postLiked,setPostLiked] = useState(false)
-  console.log(post._id,'is the post id')
+  const [postLikesCount,setPostLikesCount] = useState(0)
+  const [postCommentsCount,setPostCommentsCount] = useState(0)
+  const [showComments,setShowComments] = useState(true)
+
   const isDarkMode = useSelector(state=>state.darkmode.value)
   const [darkmode,setDarkmode] = useState(false)
   const [userCookie,setUserCookie] = useState('')
@@ -19,7 +25,10 @@ const CardPost = ({post,user}) => {
     const {data} = await axios.post(`${RouteForLikingAPost}/${postId}`,{
       headers: { freebirdusertoken: userCookie }
     })
-    if(data.status) setPostLiked(true)
+    if(data.status) {
+      setPostLiked(true)
+      setPostLikesCount(postLikesCount+1)
+    }
   }
 
   const handleUnlikePost = async(postId = post._id.toString())  => {
@@ -27,7 +36,10 @@ const CardPost = ({post,user}) => {
       Headers: {freebirdusertoken: userCookie}
     })
     console.log(data,'is the unlike post data from axios')
-    if(data.status) setPostLiked(false)
+    if(data.status){
+      setPostLikesCount(postLikesCount-1)
+      setPostLiked(false)
+    } 
   }
 
   useEffect(() => {
@@ -39,6 +51,8 @@ const CardPost = ({post,user}) => {
     setDarkmode(isDarkMode)
     const cookie = Cookies.get('FreeBirdUserToken')
     setUserCookie(cookie)
+    setPostLikesCount(post.likes.length)
+    setPostCommentsCount(post.comments.length)
   },[])
 
   return (
@@ -54,7 +68,7 @@ const CardPost = ({post,user}) => {
           </div>
         </div>
         <div className={css.postMetaRight}>
-          <div className={css.timediv}>18 jan 2022</div>
+          <div className={css.timediv}> {calculateTime(post.createdAt)} </div>
         </div>
       </div>
       <div className={css.box}>
@@ -64,11 +78,29 @@ const CardPost = ({post,user}) => {
           <div className={css.line} />
       <div className={css.box}>
         <div className={css.actions}>
-          {
+         <div className={css.actionBox}>
+         {
             postLiked ? <FcLike className={css.icon} onClick={() => handleUnlikePost(post._id)} /> : <FcLikePlaceholder onClick={() => handleLikePost(post._id)} className={css.icon} />
           }
+          &nbsp;
+          {
+             `   ${postLikesCount} likes` 
+          }
+         </div>
+         <div className={css.actionBox} style={{cursor:'pointer'}}>
+          {
+            <AiOutlineComment className={css.icon} />
+          }
+          &nbsp;
+          {
+            `${postCommentsCount} Comments`
+          }
+         </div>
         </div>
       </div>
+      {
+        showComments && <PostComments />
+      }
     </div>
   )
 }

@@ -1,7 +1,7 @@
 .container{
     width: 55vw;
     height: 100vh;
-    background: var(--greyWhite);
+    background: var(--blue);
     color: #333;
     overflow: scroll;
     display: flex;
@@ -15,7 +15,7 @@
   }
 
 .light{
-    background: var(--greyWhite);
+    background: var(--blue);
     color: #333;
 }
 .dark{

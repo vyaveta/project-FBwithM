@@ -11,7 +11,7 @@ const uploadUserProfilePic = async (media) => {
         return res.data.url
     }catch(er){
         console.log(`${er}, is the error that occured in the uploadPicToCloudinary file in the utils folder`)
-        return
+        return false
     }
 }
 

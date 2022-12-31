@@ -77,8 +77,12 @@
 }
 
 .active {
-    border: 2px solid var(--blue);
-    border-radius: 1rem;
+    width: 99%;
+    /* background-color: var(--blue); */
+    /* color: var(--white); */
+    border-right: 7px solid var(--blue);
+    border-radius: 3px;
+    /* border-radius: .3rem; */
 }
 
 .darkmode {

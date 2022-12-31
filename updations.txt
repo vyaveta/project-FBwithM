@@ -39,3 +39,8 @@
 #updation 15
 * Added posts (without image) 
 * added like and unlike feature to the post.
+
+#updation 16 
+* improved some code
+* added calculate time function 
+* working on comment post (frontend)

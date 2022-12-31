@@ -22,6 +22,7 @@ export default function Home({user,userFollowStats,postsData}) {
   // console.log(postsData)
   const [theuser,setUser] = useState('')
   const [theuserFollowStats,setUserFollowStats] = useState('')
+  const [posts,setPosts] = useState(postsData)
 
 
 
@@ -52,10 +53,10 @@ export default function Home({user,userFollowStats,postsData}) {
      <HeadTags />
      <Sidemenu user={theuser} />
      <HomeScrollArea>
-      <CreatePost />
+      <CreatePost user={user} posts={posts} setPosts={setPosts} />
       <br />
       {
-        postsData.length>0 && postsData.map((post,index) => {
+        posts.length>0 && posts.map((post,index) => {
           return <CardPost key={index} post={post} user={user} />
         })
       }

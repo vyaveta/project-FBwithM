@@ -20,8 +20,8 @@ try{
 
 router.post('/',async(req,res) => {
     try{
-        console.log(req.body,'is the reqbody')
-        const {text,location,picUrl} = req.body
+        console.log(req.body.newPost,'is the reqbody')
+        const {text,location,picUrl} = req.body.newPost
         if(text.length < 1) return res.json({status: false,msg: 'Enter a valid title for the Post'})
 
         const newPost = {

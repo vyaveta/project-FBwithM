@@ -1,0 +1,5 @@
+.container{
+    width: 100%;
+    /* background-color: var(--primaryColor); */
+    border-top: 2px solid var(--darkText);
+}

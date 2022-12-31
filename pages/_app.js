@@ -10,8 +10,6 @@ import {parseCookies,destroyCookie} from 'nookies'
 import { pageNavigation } from '../utils/pageNavigation';
 import { userLoginRoute } from '../utils/userRoutes';
 import { useEffect } from 'react';
-import { userCheckGetRequest } from '../utils/authUser';
-import baseUrl from '../utils/baseUrl';
 
 import { store } from '../store'
 import { Provider } from 'react-redux'
@@ -44,7 +42,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 MyApp.getInitialProps = async({Component,ctx}) => {
-  // try{
+  try{
     const {FreeBirdUserToken} = parseCookies(ctx)
     const protectedRoutes = ctx.pathname === '/' ||
     ctx.pathname === '/[username]' ||
@@ -60,11 +58,11 @@ MyApp.getInitialProps = async({Component,ctx}) => {
       if(Component.getInitialProps) pageProps = await Component.getInitialProps(ctx)
 
       try{
-        const res = await axios.get(userLoginRoute, {
+        const {data} = await axios.get(userLoginRoute, {
           headers: { FreeBirdUserToken: FreeBirdUserToken }
         })
         // console.log(res.data,'is the res from axios')
-        const {user,userFollowStats} = res.data
+        const {user,userFollowStats} = data
         if(user && !protectedRoutes) pageNavigation(ctx,'/') // If the user is already logged in and tries to access login/signup page it will redirect user to the home page
         pageProps.user = user
         pageProps.userFollowStats = userFollowStats
@@ -75,9 +73,9 @@ MyApp.getInitialProps = async({Component,ctx}) => {
       }
     }
     return {pageProps}
-  // }catch(e){
-  //   console.log(e,'is the error in the my app ip')
-  // }
+  }catch(e){
+    console.log(e,'is the error in the my app ip')
+  }
 }
 
 export default MyApp

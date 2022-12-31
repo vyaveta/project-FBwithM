@@ -9,6 +9,7 @@
   --primaryLight: #F806CC;
   --cursiveFont:  'Marck Script', cursive;
   --greyWhite: 	 #e6e6e6;
+  --greyWhiteDark: rgb(83, 83, 83);
 }
 .light{
   color: var(--darkText)
@@ -108,7 +109,7 @@ a {
   /* animation: blurmovements 12s linear infinite; */
 }
 .bubble2{
-  filter: blur(120px);
+  filter: blur(100px);
   /* width: 15rem; */
   height: 15rem;
   animation: blurmovement 12s linear infinite;
