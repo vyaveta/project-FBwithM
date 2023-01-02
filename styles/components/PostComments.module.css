@@ -1,5 +1,109 @@
 .container{
     width: 100%;
     /* background-color: var(--primaryColor); */
-    border-top: 2px solid var(--darkText);
+    border-top: 1px solid var(--darkText);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+.commentBox{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    /* background-color: red; */
+    align-items: flex-start;
+}
+.commentProfileImage{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.metaData{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+.noWrap{
+    width: 100%;
+    /* padding: 1rem; */
+    /* flex-wrap: nowrap; */
+}
+.metaDataWithAction{
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;
+    width: 100%;
+    /* background-color: rebeccapurple; */
+    position: relative;
+    
+}
+.threeDotAction{
+    padding: 0.6rem 0.7rem;
+    /* background-color: red; */
+    color: inherit;
+    cursor: pointer;
+    /* width: 100%; */
+}
+.threeDotAction:active{
+    border-radius: 50%;
+    background-color: var(--greyWhite);
+}
+.threeDotActionBox{
+    position:absolute;
+    width: 150px;
+    /* height: 100px; */
+    background-color:var(--white) ;
+    color: #333;
+    border: 1px solid var(--darkText);
+    right: 0;
+    z-index: 2;
+    border-radius: 0.7rem;
+}
+.threeDotActionBox > ul {
+    list-style: none;
+    text-transform: lowercase;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between !important;
+    align-items: center;
+    /* gap: .4rem; */
+}
+.threeDotActionBox > ul > li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: .4rem .9rem;
+    width: 100%;
+}
+.threeDotActionBox > ul > li:hover{
+    background-color: var(--greyWhite);
+}
+.buttonDiv{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.viewMoreButton{
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: .4rem;
+    border: none;
+    cursor: pointer;
 }

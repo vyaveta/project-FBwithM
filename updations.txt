@@ -44,3 +44,6 @@
 * improved some code
 * added calculate time function 
 * working on comment post (frontend)
+
+#updation 17 
+* improved comment box ui

@@ -75,7 +75,7 @@ const CardPost = ({post,user}) => {
         <h4>{post.text}
         </h4>
       </div>
-          <div className={css.line} />
+          {/* <div className={css.line} /> */}
       <div className={css.box}>
         <div className={css.actions}>
          <div className={css.actionBox}>
