@@ -7,8 +7,14 @@
     height: 100vh;
     overflow: hidden;
     max-width: 100vw;
-    background: url(../public/loginbackground.png);
+    /* background: url(../public/loginbackground.png); */
+    background: url(https://img5.goodfon.com/wallpaper/nbig/1/63/voskhod-anime-art-kimi-no-na-wa-tvoio-imia-nebo-oblaka.jpg);
+    /* background: url(../public/darkSky.png); */
     background-size: cover;
+}
+.darkmode{    
+    background-size: cover !important;
+    background: url(https://wallpaperaccess.com/full/2766128.jpg);
 }
 .clouds{
     max-width: 100vw;
@@ -153,4 +159,39 @@
     padding: 2rem 0 !important;
     flex: 2;
     gap: 1rem;
+}
+
+.darkmodeBox {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    /* right: 0; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.darkmodeButton{
+    width: 80px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 2.2rem;
+    border-radius: 1.2rem;
+    border: none;
+    background: var(--primaryDark);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+.lightmodeButton{
+    width: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 2.2rem;
+    border-radius: 1.2rem;
+    border: none;
+    background: var(--primaryDark);
+    font-size: 1.8rem;
+    cursor: pointer;
 }

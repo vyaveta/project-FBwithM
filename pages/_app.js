@@ -14,6 +14,10 @@ import { useEffect } from 'react';
 import { store } from '../store'
 import { Provider } from 'react-redux'
 
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
+
 function MyApp({ Component, pageProps }) {
 
   Router.onRouteChangeStart = () => nProgress.start()

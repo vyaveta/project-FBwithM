@@ -9,12 +9,13 @@ import { RouteForLikingAPost, RouteForUnLikingAPost } from '../../utils/userRout
 import Cookies from 'js-cookie'
 import { calculateTime } from '../../utils/calculateTime'
 import PostComments from './PostComments'
+import CommentInputField from './CommentInputField'
 
 const CardPost = ({post,user}) => {
   const [postLiked,setPostLiked] = useState(false)
   const [postLikesCount,setPostLikesCount] = useState(0)
   const [postCommentsCount,setPostCommentsCount] = useState(0)
-  const [showComments,setShowComments] = useState(true)
+  const [showComments,setShowComments] = useState(false)
 
   const isDarkMode = useSelector(state=>state.darkmode.value)
   const [darkmode,setDarkmode] = useState(false)
@@ -87,7 +88,9 @@ const CardPost = ({post,user}) => {
              `   ${postLikesCount} likes` 
           }
          </div>
-         <div className={css.actionBox} style={{cursor:'pointer'}}>
+         <div className={css.actionBox} style={{cursor:'pointer'}}
+          onClick= {() => setShowComments(!showComments)}
+         >
           {
             <AiOutlineComment className={css.icon} />
           }
@@ -101,6 +104,7 @@ const CardPost = ({post,user}) => {
       {
         showComments && <PostComments />
       }
+      <CommentInputField user={user} postId={post._id} />
     </div>
   )
 }

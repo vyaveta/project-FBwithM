@@ -47,7 +47,14 @@
 }
 .box input::placeholder,
 .input::placeholder{
-    color:var(--white);
+    color:var(--greyWhite);
+}
+.box textarea{
+    height: auto;
+    width: 90%;
+    text-align: center;
+    text-justify: newspaper;
+    padding-top: 1rem;
 }
 .box2{
     width: 100%;

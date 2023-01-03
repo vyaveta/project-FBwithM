@@ -47,3 +47,7 @@
 
 #updation 17 
 * improved comment box ui
+
+#updation 18
+* even more improvements in comment box ui
+* now users can change the darkmode in the login page

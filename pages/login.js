@@ -9,10 +9,33 @@ import {AiFillEyeInvisible} from 'react-icons/ai'
 import { userLogin } from '../utils/authUser';
 import { Oval } from 'react-loading-icons';
 import Cookies from 'js-cookie';
+import { useSelector , useDispatch } from 'react-redux';
+import {MdDarkMode} from 'react-icons/md'
+import {MdLightMode} from 'react-icons/md'
+import { changeColorMode } from '../slices/darkModeSlice';
 
 const EMAIL_REGEX =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 function Login() {
+    const dispatch = useDispatch()
+    const darkmode = useSelector((state) => state.darkmode.value)
+
+    const [isDarkMode,setIsDarkMode] = useState(false)
+
+    const changeColorModeFunction = () => {
+        Cookies.set('FreeBirdDarkMode',!isDarkMode)
+        setIsDarkMode(!isDarkMode)
+        dispatch(changeColorMode())
+      }
+
+    useEffect(() => {
+        if(darkmode === false || darkmode)
+        setIsDarkMode(darkmode)
+    },[])
+
+    useEffect(() => {
+        setIsDarkMode(darkmode)
+    },[darkmode])
 
     const emailRef = useRef()
 
@@ -64,10 +87,17 @@ function Login() {
 
   return (
 
-    <div className={css.login__wrapper}>
+    <div className={ isDarkMode ?`${css.login__wrapper} ${css.darkmode}` : `${css.login__wrapper}` }>
         <div className={css.clouds}>
-            <img src='/cloud.png' alt="" />
-            <img src='/cloud.png' alt="" />
+           
+           {
+           
+               !isDarkMode &&  <>
+               <img src='/cloud.png' alt="" />
+               <img src='/cloud.png' alt="" />
+           </>
+               
+           }
         </div> 
     <div className={css.login__container}>
         <div className={css.login__title}>
@@ -105,6 +135,16 @@ function Login() {
             > <Link href='/signup'>Signup</Link> </span> </p>
         </div>
     </div>
+
+    <div className={css.darkmodeBox}>
+        <button className={isDarkMode ? `${css.darkmodeButton}` : css.lightmodeButton} onClick={changeColorModeFunction}> 
+         {
+          isDarkMode ? <MdDarkMode/> : 
+           <MdLightMode />
+         }
+       </button>
+      </div>
+
     </div>
   )
 }

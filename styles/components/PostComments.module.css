@@ -28,10 +28,12 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 6px;
+    /* gap: 6px; */
     font-weight: 500;
+    /* width: 100%; */
+    /* background-color: black; */
 }
 .noWrap{
     width: 100%;
@@ -106,4 +108,8 @@
     border-radius: .4rem;
     border: none;
     cursor: pointer;
+}
+.commentText{
+    /* background-color: red; */
+    width: 100%;
 }

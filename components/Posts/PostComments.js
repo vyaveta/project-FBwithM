@@ -20,8 +20,8 @@ const PostComments = () => {
        <p className='margin-0 fontweight-600'>Adwaith</p>
        {/* </div> */}
        </div>
-       <div className={css.metaData}>
-       <p className={`${css.commentText} margin-0`} >Wow thats an inspiring one</p>
+       <div className={`width-100 ${css.metaData}`}>
+       <p className={`${css.commentText} margin-0`} >Wow thatsaninspiring one ljsfjklsjfoskksfssnvksnfslfnnf </p>
        </div>
        <div className={`${css.metaDataWithAction} ${css.noWrap}`}>
         <p className = {`margin-0 ${css.w}`}>Today 12:01 am</p>

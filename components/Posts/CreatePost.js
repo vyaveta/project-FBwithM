@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import css from "../../styles/components/CreatePost.module.css";
 import { useSelector } from "react-redux";
 import {TiImage} from 'react-icons/ti'
+import uploadUserProfilePic from "../../utils/uploadPicToCloudinary";
 
 const CreatePost = ({user,posts,setPosts}) => {
+
   const darkmode = useSelector((state) => state.darkmode.value);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [newPost,setNewPost] = useState({
@@ -12,15 +14,24 @@ const CreatePost = ({user,posts,setPosts}) => {
     user:'',
     likes:[],
     comments: [],
-    
   })
 
-  const handleCreateNewPost = (e) => {
+  const [loading,setLoading] = useState(false)
+  const inputRef = useRef()
+  const [error,setError] = useState(false)
+  const [highlighted,setHighlighted] = useState(false)
+
+  const [media,setMedia] = useState(null)
+  const [mediaPreview,setMediaPreview] = useState(null)
+
+  const handleCreateNewPost = e => {
     console.log('function called')
-    const {name,value} = e.target
-    const obj = newPost
-    obj[name] = value
-    setNewPost(obj)
+    const {name,value,files} = e.target
+    if(name==='media'){
+      setMedia(files[0])
+      setMediaPreview(URL.createObjectURL(files[0]))
+    }
+    setNewPost(prev => ({...prev,[name]: value}))
   }
 
   const handleUploadNewPost = async () => {
@@ -57,8 +68,8 @@ const CreatePost = ({user,posts,setPosts}) => {
         <div className={css.ProfilePicDiv}>
           <img src={user.profilePicUrl} className={css.profilePic} />
         </div>
-      <div className = {css.box} >
-        <input className={css.input} onChange={handleCreateNewPost}
+      <div className = {css.box} >  
+        <textarea className={css.input} onChange={handleCreateNewPost}
          value={newPost.text} 
          name='text' 
          type="text" 
