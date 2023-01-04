@@ -18,10 +18,10 @@ try{
 
 //For creating a Post
 
-router.post('/',async(req,res) => {
+router.post('/',userAuthMiddlewareViaHeaders,async(req,res) => {
     try{
-        console.log(req.body.newPost,'is the reqbody')
-        const {text,location,picUrl} = req.body.newPost
+        console.log(req.body,'is the reqbody')
+        const {text,location,picUrl} = req.body
         if(text.length < 1) return res.json({status: false,msg: 'Enter a valid title for the Post'})
 
         const newPost = {

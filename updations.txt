@@ -55,3 +55,7 @@
 #updation 19 
 * fixed the like button bug while creating the post (frontend)
 * About to add show post photo feature
+
+#updation 20
+* now users can upload post with pic
+* added drag and drop image while uploading post.

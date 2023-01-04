@@ -3,8 +3,15 @@ import css from "../../styles/components/CreatePost.module.css";
 import { useSelector } from "react-redux";
 import {TiImage} from 'react-icons/ti'
 import uploadUserProfilePic from "../../utils/uploadPicToCloudinary";
+import axios from "axios";
+import { routeForThePost } from "../../utils/userRoutes";
+import { getUserAuthHeader } from "../../utils/authUser";
+import { toast } from 'react-toastify'
 
 const CreatePost = ({user,posts,setPosts}) => {
+
+  let thePicUrl
+  let theNewPost
 
   const darkmode = useSelector((state) => state.darkmode.value);
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -12,9 +19,11 @@ const CreatePost = ({user,posts,setPosts}) => {
     text:'',
     location:'',
     user,
+    picUrl:'',
     likes:[],
     comments: [],
   })
+
 
   const [loading,setLoading] = useState(false)
   const inputRef = useRef()
@@ -23,7 +32,11 @@ const CreatePost = ({user,posts,setPosts}) => {
 
   const [media,setMedia] = useState(null)
   const [mediaPreview,setMediaPreview] = useState(null)
-  const [showImagePreview,setShowImagePreview] = useState(true) // thislkfj
+  const [showImagePreview,setShowImagePreview] = useState(false) 
+
+  const handleError = msg => {
+    toast.error(msg)
+  }
 
   const handleCreateNewPost = e => {
     console.log('function called')
@@ -32,14 +45,52 @@ const CreatePost = ({user,posts,setPosts}) => {
       setMedia(files[0])
       setMediaPreview(URL.createObjectURL(files[0]))
       console.log('image url created')
+      setNewPost({
+        ...newPost,
+        picUrl: URL.createObjectURL(files[0])
+      });
     }
     setNewPost(prev => ({...prev,[name]: value}))
   }
 
+  const handleDroppedImage = e => {
+    try{
+      const droppedFile=Array.from(e.dataTransfer.files) 
+      setMedia(droppedFile[0])
+      setMediaPreview(URL.createObjectURL((droppedFile[0])))
+      setNewPost({
+        ...newPost,
+        picUrl: URL.createObjectURL(droppedFile[0])
+      });
+    }catch(e){
+      handleError('Enter a valid Image')
+    }
+  }
+
+  const uploadPicToCloudinary = async() => {
+     thePicUrl =  await uploadUserProfilePic(media)
+     theNewPost.picUrl = thePicUrl
+    setNewPost({
+      ...newPost,
+      picUrl: thePicUrl
+    });
+    console.log(thePicUrl,'is the pic url')
+  }
+
   const handleUploadNewPost = async () => {
     try{
+      const headers = getUserAuthHeader()
       console.log(newPost,'is the newPost')
-      setPosts(prev => [newPost,...prev])
+      if(media!==null){
+       await uploadPicToCloudinary()
+      }
+      const {data} = await axios.post(routeForThePost,theNewPost,{headers})
+      console.log(data.status,'from the axios post create post function')
+      if(data.status) {
+        setPosts(prev => [newPost,...prev])
+        setNewPost({text:'',location:'',user,picUrl:'',likes:[],comments: []})
+        setShowImagePreview(false)
+      }
     }catch(e){
       console.log(e,'is the error that occured in the handleUploadNewPost function in the CreatePost.js')
     }
@@ -53,15 +104,16 @@ const CreatePost = ({user,posts,setPosts}) => {
     setIsDarkMode(darkmode);
   }, []);
 
-  // useEffect(() => {
-  //   console.log(newPost,'is the newPost')
-  // },[newPost])
+  useEffect(() => {
+    theNewPost = newPost
+  },[newPost])
 
 
 
   return (
     <div
       className={isDarkMode ? `${css.container} ${css.dark}` : css.container}
+      onDrop={handleDroppedImage}
     >
       <div className={css.box}>
         <h3>Share your thoughts</h3>

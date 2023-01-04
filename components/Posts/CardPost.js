@@ -94,6 +94,12 @@ const CardPost = ({post,user}) => {
         <h4>{post.text}
         </h4>
       </div>
+     {
+      post.picUrl &&
+      <div className={css.imageBox}>
+          <img src={post.picUrl} alt="" />
+      </div>
+     }
           {/* <div className={css.line} /> */}
       <div className={css.box}>
         <div className={css.actions}>
