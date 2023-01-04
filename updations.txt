@@ -51,3 +51,7 @@
 #updation 18
 * even more improvements in comment box ui
 * now users can change the darkmode in the login page
+
+#updation 19 
+* fixed the like button bug while creating the post (frontend)
+* About to add show post photo feature

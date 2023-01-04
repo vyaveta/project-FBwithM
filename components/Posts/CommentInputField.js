@@ -14,7 +14,9 @@ const CommentInputField = ({postId,user,setComments}) => {
   return (
     <div className={css.container}>
         <img src={user.profilePicUrl} />
-        <input type='text' placeholder='Comment this post' name='text' autoComplete='off' value={text} />
+        <input type='text' placeholder='Comment this post' name='text' autoComplete='off' 
+        // value={text} 
+        />
         <FontAwesomeIcon className={css.icon} icon={faPaperPlane} />
     </div>
   )

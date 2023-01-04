@@ -11,7 +11,7 @@ const CreatePost = ({user,posts,setPosts}) => {
   const [newPost,setNewPost] = useState({
     text:'',
     location:'',
-    user:'',
+    user,
     likes:[],
     comments: [],
   })
@@ -23,6 +23,7 @@ const CreatePost = ({user,posts,setPosts}) => {
 
   const [media,setMedia] = useState(null)
   const [mediaPreview,setMediaPreview] = useState(null)
+  const [showImagePreview,setShowImagePreview] = useState(true) // thislkfj
 
   const handleCreateNewPost = e => {
     console.log('function called')
@@ -30,15 +31,15 @@ const CreatePost = ({user,posts,setPosts}) => {
     if(name==='media'){
       setMedia(files[0])
       setMediaPreview(URL.createObjectURL(files[0]))
+      console.log('image url created')
     }
     setNewPost(prev => ({...prev,[name]: value}))
   }
 
   const handleUploadNewPost = async () => {
     try{
-      posts.unshift(newPost)
-      setPosts(posts)
-      console.log(posts,'is the posts')
+      console.log(newPost,'is the newPost')
+      setPosts(prev => [newPost,...prev])
     }catch(e){
       console.log(e,'is the error that occured in the handleUploadNewPost function in the CreatePost.js')
     }
@@ -52,9 +53,10 @@ const CreatePost = ({user,posts,setPosts}) => {
     setIsDarkMode(darkmode);
   }, []);
 
-  useEffect(() => {
-    
-  },[newPost])
+  // useEffect(() => {
+  //   console.log(newPost,'is the newPost')
+  // },[newPost])
+
 
 
   return (
@@ -79,7 +81,11 @@ const CreatePost = ({user,posts,setPosts}) => {
       </div>
       </div>
       <div className={css.box2} >
-        <TiImage className={css.icon} />
+        <TiImage className={css.icon} onClick={() => {
+          setShowImagePreview(!showImagePreview)
+          inputRef.current.click()
+        }} />
+        <input type='file' name='media' style={{display:'none'}} onChange={handleCreateNewPost} ref={inputRef} />
         <div className={css.inputCover}>
           <input className={css.input}
            type='text' 
@@ -96,6 +102,14 @@ const CreatePost = ({user,posts,setPosts}) => {
           >Upload</button>
         </div>
       </div>
+      {
+        (showImagePreview || mediaPreview !== null ) && 
+        <div className={css.box3}>
+          <div className={css.postImagePreviewBox}>
+            <img src={mediaPreview} />
+          </div>
+        </div>
+      }
     </div>
   );
 };
