@@ -14,13 +14,17 @@ import {AiFillEyeInvisible} from 'react-icons/ai'
 import { Oval } from 'react-loading-icons'
 import axios from 'axios';
 import baseUrl from '../utils/baseUrl';
+import {MdDarkMode} from 'react-icons/md'
+import {MdLightMode} from 'react-icons/md'
+import { changeColorMode } from '../slices/darkModeSlice';
+import { useSelector , useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 
 import { registerUser } from '../utils/authUser';
 import uploadUserProfilePic from '../utils/uploadPicToCloudinary';
 
 import ImageDropDiv from '../components/ImageDropDiv';
 
-import FinalSignUpStep from '../components/FinalSignUpStep';
 
 const USER_NAME_REGEX = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 const USER_REGEX = /^[a-zA-z][a-zA-Z ]{3,23}$/; // This regex is for the validation of users real name
@@ -30,6 +34,26 @@ let cancelUsernameCheck; // This variable is used to cancel the axios check user
 
 const Signup = () => {
 
+    const dispatch = useDispatch()
+    const darkmode = useSelector((state) => state.darkmode.value)
+
+    const [isDarkMode,setIsDarkMode] = useState(false)
+
+    const changeColorModeFunction = () => {
+        Cookies.set('FreeBirdDarkMode',!isDarkMode)
+        setIsDarkMode(!isDarkMode)
+        dispatch(changeColorMode())
+      }
+
+    useEffect(() => {
+        if(darkmode === false || darkmode)
+        setIsDarkMode(darkmode)
+    },[])
+
+    useEffect(() => {
+        setIsDarkMode(darkmode)
+    },[darkmode])
+    
     const [finalSignUpStep,setFinalSignUpStep] = useState(false)
 
     const userRef = useRef()
@@ -196,10 +220,18 @@ const Signup = () => {
     }
 
   return (
-        <div className={css.login__wrapper}>
+        <div className={ isDarkMode ?`${css.login__wrapper} ${css.darkmode}` : `${css.login__wrapper}`}>
             <div className={css.clouds}>
-            <img src='/cloud.png' alt="" />
-            <img src='/cloud.png' alt="" />
+            {
+           
+             !isDarkMode &&  <>
+             <img src='/cloud.png' alt="" />
+             <img src='/cloud.png' alt="" />
+             </>
+           
+           }
+            {/* <img src='/cloud.png' alt="" />
+            <img src='/cloud.png' alt="" /> */}
         </div>
             <div className={css.login__container}>
                 {
@@ -388,6 +420,16 @@ const Signup = () => {
                     )
                 }
             </div>
+
+            <div className={css.darkmodeBox}>
+        <button className={isDarkMode ? `${css.darkmodeButton}` : css.lightmodeButton} onClick={changeColorModeFunction}> 
+         {
+          isDarkMode ? <MdDarkMode/> : 
+           <MdLightMode />
+         }
+       </button>
+      </div>
+
         </div>
     )
 }

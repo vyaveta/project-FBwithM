@@ -67,3 +67,6 @@
   # bug fix updation - create post bug 
   -- Status: bug fixed
   -- To maintain the liked post state, we update the Posts using setPosts , so the liked state is restored.
+
+#updation 23
+* added swith darkmode and lightmode feature in sign up
