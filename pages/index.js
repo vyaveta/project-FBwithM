@@ -23,7 +23,12 @@ export default function Home({user,userFollowStats,postsData}) {
   const [theuser,setUser] = useState('')
   const [theuserFollowStats,setUserFollowStats] = useState('')
   const [posts,setPosts] = useState(postsData)
+  const [change,setChange] = useState(1)
 
+
+  // useEffect(()=> {
+  //   setPosts()
+  // },[change])
 
 
   const getUserData = async() => { // this useEffect is used just in case if the user data is not loaded by the app.js it will collect the user data _Note** this will only work when the _app.js fails to pass user data
@@ -57,7 +62,7 @@ export default function Home({user,userFollowStats,postsData}) {
       <br />
       {
         posts.length>0 && posts.map((post,index) => {
-          return <CardPost key={index} post={post} user={user} />
+          return <CardPost key={index} post={post} user={user} setChange={setChange} />
         })
       }
      </HomeScrollArea>

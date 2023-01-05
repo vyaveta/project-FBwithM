@@ -32,7 +32,7 @@ router.post('/',userAuthMiddlewareViaHeaders,async(req,res) => {
         if(picUrl) newPost.picUrl = picUrl
 
         const post = await new PostModel(newPost).save()
-        return res.json({status: true, msg: 'Succesfully Created your Post', post:post._id})
+        return res.json({status: true, msg: 'Succesfully Created your Post', post:post})
     }catch(e){
         console.log(`${e} is the error occured while creating the post`)
         return res.json({status: false, msg: 'Internal Server Error!!'})

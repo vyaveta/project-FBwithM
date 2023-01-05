@@ -12,7 +12,10 @@ import PostComments from './PostComments'
 import CommentInputField from './CommentInputField'
 import {toast} from 'react-toastify'
 
-const CardPost = ({post,user}) => {
+const CardPost = ({post,user,setChange}) => {
+  const [likes, setLikes] = useState(post.likes);
+  const isLiked =likes.length > 0 && likes.filter(like => like.user === user._id).length > 0;
+
   const [postLiked,setPostLiked] = useState(false)
   const [postLikesCount,setPostLikesCount] = useState(0)
   const [postCommentsCount,setPostCommentsCount] = useState(0)
@@ -33,13 +36,25 @@ const CardPost = ({post,user}) => {
       headers: { freebirdusertoken: userCookie }
     })
     if(data.status) {
-      setPostLiked(true)
+      setLikes(prev => [...prev,{user:user._id}])
       setPostLikesCount(postLikesCount+1)
     }else handleError(data.msg)
     }catch(e){
       handleError('Oops something went wrong')
     }
   }
+
+  useEffect(() => {
+    if(likes.length > 0 && likes.filter(like => like.user === user._id).length > 0) setPostLiked(true)
+    else setPostLiked(false)
+    setPostLikesCount(likes.length)
+  },[likes])
+
+  useEffect(() => {
+    if(likes.length > 0 && likes.filter(like => like.user === user._id).length > 0) setPostLiked(true)
+    else setPostLiked(false)
+    setPostLikesCount(likes.length)
+  },[post])
 
   const handleUnlikePost = async(postId = post._id.toString())  => {
     try{
@@ -48,6 +63,7 @@ const CardPost = ({post,user}) => {
       })
       console.log(data,'is the unlike post data from axios')
       if(data.status){
+        setLikes(prev => prev.filter(like => like.user!==user._id))
         setPostLikesCount(postLikesCount-1)
         setPostLiked(false)
       } 
@@ -61,12 +77,13 @@ const CardPost = ({post,user}) => {
   },[isDarkMode])
 
   useEffect(()=> {
-    if(post.likes.filter(like => like.user.toString()===user._id).length > 0) setPostLiked(true)
+    setLikes(post.likes)
+    if(likes.filter(like => like.user.toString()===user._id).length > 0) setPostLiked(true)
     else setPostLiked(false)
     setDarkmode(isDarkMode)
     const cookie = Cookies.get('FreeBirdUserToken')
     setUserCookie(cookie)
-    setPostLikesCount(post.likes.length)
+    setPostLikesCount(likes.length)
     setPostCommentsCount(post.comments.length)
   },[post])
 

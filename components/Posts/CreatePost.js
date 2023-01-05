@@ -87,9 +87,11 @@ const CreatePost = ({user,posts,setPosts}) => {
       const {data} = await axios.post(routeForThePost,theNewPost,{headers})
       console.log(data.status,'from the axios post create post function')
       if(data.status) {
-        setPosts(prev => [newPost,...prev])
+        data.post.user= user
+        setPosts(prev => [data.post,...prev])
         setNewPost({text:'',location:'',user,picUrl:'',likes:[],comments: []})
         setShowImagePreview(false)
+        setMediaPreview(null)
       }
     }catch(e){
       console.log(e,'is the error that occured in the handleUploadNewPost function in the CreatePost.js')
