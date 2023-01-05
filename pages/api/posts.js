@@ -96,7 +96,7 @@ router.post('/like/:postId',userAuthMiddleware,async(req,res) => {
         if(isLiked) return res.json({status: false,msg: 'Post already Liked'})
         await post.likes.unshift({user: userId})
         await post.save()
-        return res.json({status: true, msg: 'Post Liked'})
+        return res.json({status: true, msg: 'Post Liked',post})
     }catch(e){
         console.log(e,'is the error that occured in while running the code for liking the post in backend')
         return res.json({status: false,msg: 'Internal Server Error'})
@@ -116,7 +116,7 @@ router.post('/unlike/:postId',userAuthMiddleware,async(req,res) => {
         const index = post.likes.map((like=> like.user.toString())).indexOf(userId)
         await post.likes.splice(index,1)
         await post.save()
-        return res.json({status: true,msg:'Post unliked!'})
+        return res.json({status: true,msg:'Post unliked!',post})
     }catch(e){
         console.log(e,'is the error occured while running the backend code for unliking the post')
     }

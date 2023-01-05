@@ -5,16 +5,16 @@ import {FcLike} from 'react-icons/fc'
 import {AiOutlineComment} from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
-import { RouteForLikingAPost, RouteForUnLikingAPost } from '../../utils/userRoutes'
+import { getAllPostsRoute, RouteForLikingAPost, RouteForUnLikingAPost } from '../../utils/userRoutes'
 import Cookies from 'js-cookie'
 import { calculateTime } from '../../utils/calculateTime'
 import PostComments from './PostComments'
 import CommentInputField from './CommentInputField'
 import {toast} from 'react-toastify'
 
-const CardPost = ({post,user,setChange}) => {
+const CardPost = ({post,user,setPosts}) => {
+
   const [likes, setLikes] = useState(post.likes);
-  const isLiked =likes.length > 0 && likes.filter(like => like.user === user._id).length > 0;
 
   const [postLiked,setPostLiked] = useState(false)
   const [postLikesCount,setPostLikesCount] = useState(0)
@@ -36,24 +36,34 @@ const CardPost = ({post,user,setChange}) => {
       headers: { freebirdusertoken: userCookie }
     })
     if(data.status) {
-      setLikes(prev => [...prev,{user:user._id}])
+      setLikes(prev => [...prev,{user:user._id}]) 
+      const postsRes = await axios.get(getAllPostsRoute,{
+        headers: { freebirdusertoken: userCookie}
+      })
+      if(!postsRes.data.status) handleError(postsRes.data.msg)
+      else setPosts(postsRes.data.posts)
       setPostLikesCount(postLikesCount+1)
     }else handleError(data.msg)
     }catch(e){
+      console.log(e)
       handleError('Oops something went wrong')
     }
   }
 
   useEffect(() => {
+    
     if(likes.length > 0 && likes.filter(like => like.user === user._id).length > 0) setPostLiked(true)
     else setPostLiked(false)
+    console.log(likes,'is the likes')
     setPostLikesCount(likes.length)
   },[likes])
 
   useEffect(() => {
+    console.log(post,'ist the post')
     if(likes.length > 0 && likes.filter(like => like.user === user._id).length > 0) setPostLiked(true)
     else setPostLiked(false)
     setPostLikesCount(likes.length)
+    console.log(likes,'is the likes')
   },[post])
 
   const handleUnlikePost = async(postId = post._id.toString())  => {
@@ -66,6 +76,11 @@ const CardPost = ({post,user,setChange}) => {
         setLikes(prev => prev.filter(like => like.user!==user._id))
         setPostLikesCount(postLikesCount-1)
         setPostLiked(false)
+        const postsRes = await axios.get(getAllPostsRoute,{
+          headers: { freebirdusertoken: userCookie}
+        })
+        if(!postsRes.data.status) handleError(postsRes.data.msg)
+        else setPosts(postsRes.data.posts)
       } 
     }catch(e){
       handleError('Oops Something went wrong')

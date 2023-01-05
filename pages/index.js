@@ -61,8 +61,8 @@ export default function Home({user,userFollowStats,postsData}) {
       <CreatePost user={user} posts={posts} setPosts={setPosts} />
       <br />
       {
-        posts.length>0 && posts.map((post,index) => {
-          return <CardPost key={index} post={post} user={user} setChange={setChange} />
+        posts && posts.map((post,index) => {
+          return <CardPost key={index} post={post} user={user} setPosts={setPosts} />
         })
       }
      </HomeScrollArea>

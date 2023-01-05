@@ -64,3 +64,6 @@
  -- Newly created Liked posts are the victims, when a user created a post,
   he/she likes it, when created another new post the before created posts, i.e before reload is shown uliked
   
+  # bug fix updation - create post bug 
+  -- Status: bug fixed
+  -- To maintain the liked post state, we update the Posts using setPosts , so the liked state is restored.
