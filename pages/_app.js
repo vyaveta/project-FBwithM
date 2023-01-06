@@ -73,7 +73,7 @@ MyApp.getInitialProps = async({Component,ctx}) => {
       }catch(e){
         console.log(e.message,'is the error')
         destroyCookie(ctx,'FreeBirdUserToken')
-        pageNavigation(ctx,'/login')
+        // pageNavigation(ctx,'/login')
       }
     }
     return {pageProps}

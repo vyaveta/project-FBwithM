@@ -70,3 +70,6 @@
 
 #updation 23
 * added swith darkmode and lightmode feature in sign up
+
+#updation 24
+* added delete post feature

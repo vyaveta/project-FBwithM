@@ -79,6 +79,7 @@ const CreatePost = ({user,posts,setPosts}) => {
 
   const handleUploadNewPost = async () => {
     try{
+      if(newPost.text.trim()==='') return handleError('Enter your Thoughts')
       const headers = getUserAuthHeader()
       console.log(newPost,'is the newPost')
       if(media!==null){

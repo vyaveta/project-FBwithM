@@ -100,6 +100,15 @@ a {
 .width-100{
   width: 100% !important;
 }
+.position-relative{
+  position: relative;
+}
+.position-absolute{
+  position: absolute;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
 .blurBubble{
   position: absolute;
   height: 10rem;
