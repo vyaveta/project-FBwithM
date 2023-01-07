@@ -19,10 +19,11 @@
     background-color:var(--greyWhite);
     border-radius: 1rem;
     align-items: center;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    min-height: 70px;
 }
 .dark .commentBox{
-    background-color: var(--primaryDark) !important;
+    background-color: var(--darkText) !important;
 }
 .commentProfileImage{
     height: 40px;

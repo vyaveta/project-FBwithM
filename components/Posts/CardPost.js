@@ -234,7 +234,7 @@ const CardPost = ({post,user,setPosts}) => {
         <div className={css.commentContainer} >
           {
             post.comments.map((comment,index) => {
-              if(index < 4) return <PostComments key={index} user={user} post={post} comment={comment} setAllPosts={setAllPosts} />
+              if(index < 4) return <PostComments key={index} user={user} post={post} comment={comment} setAllPosts={setAllPosts} darkmode={darkmode} />
              })
           }
         </div>

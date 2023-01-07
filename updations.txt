@@ -81,3 +81,6 @@
 #updation 26
 * Fixed the bug in comment box
 * improved comment box ui
+
+#updation 27
+* improved comment box ui in darkmode

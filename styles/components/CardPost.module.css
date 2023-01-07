@@ -22,6 +22,12 @@
     background: var(--darkText);
     color: var(--white);
 }
+.dark .container:hover{
+    box-shadow: 1px 1px 15px 1px var(--blue) !important;
+}
+.dark:hover{
+    box-shadow: 1px 1px 15px 1px var(--greyWhiteDark);
+}
 .box{
     display: flex;
     flex-direction: row;
