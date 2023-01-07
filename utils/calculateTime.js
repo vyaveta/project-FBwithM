@@ -8,7 +8,6 @@ export const calculateTime = createdAt => {
     const differenceInDays = today.diff(postDate,'d')
     const differenceInMinutes = today.diff(postDate,'minutes')
   
-    console.log(differenceInDays,'diff in days')
  
     
     if(differenceInHours <= 12 && differenceInHours >=1) return <>  {differenceInHours} hours ago </>

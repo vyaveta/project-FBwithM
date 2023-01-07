@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import css from '../../styles/components/PostComments.module.css'
-import { useSelector } from 'react-redux'
-
+import { toast } from 'react-toastify'
 // Icons
 import {BsThreeDotsVertical} from 'react-icons/bs'
 import {MdEdit} from 'react-icons/md'
@@ -10,8 +9,17 @@ import {IoIosFlag} from 'react-icons/io'
 
 // Local functions
 import { calculateTime } from '../../utils/calculateTime'
+import { deleteComment } from '../../utils/postActions'
 
 const PostComments = ({post,comment,user,darkmode}) => {
+
+  const commentRef = useRef(null)
+
+  const showToastMessage = (flag,msg) => {
+    if(flag===false) return toast.error(msg)
+    if(flag===true) return toast.success(msg)
+    toast.info(msg)
+  }
 
   useEffect(() => {
     console.log(comment,'ist e comment')
@@ -20,7 +28,7 @@ const PostComments = ({post,comment,user,darkmode}) => {
   const [showCommentActionBox,setShowCommentActionBox] = useState(false)
 
   return (
-    <div className={darkmode ? `${css.dark} ${css.container}` : `${css.conterner}`}> 
+    <div className={darkmode ? `${css.dark} ${css.container}` : `${css.conterner}`} ref={commentRef} > 
         <div className={css.commentBox}>
         <div className={css.metaData}>
         {/* <div> */}
@@ -44,7 +52,9 @@ const PostComments = ({post,comment,user,darkmode}) => {
            showCommentActionBox && <div className={css.threeDotActionBox}>
              <ul>
                <li>Edit <MdEdit /></li>
-               <li>Delete <MdDelete /></li>
+               <li
+               onClick={() => deleteComment(comment._id,post._id,showToastMessage,commentRef)} 
+               >Delete <MdDelete /></li>
                {/* <li>Report  <IoIosFlag /></li> */}
              </ul>
            </div>

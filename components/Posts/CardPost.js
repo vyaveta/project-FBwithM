@@ -28,6 +28,10 @@ import { getAllPostsRoute, RouteForLikingAPost, routeForThePost, RouteForUnLikin
 
 const CardPost = ({post,user,setPosts}) => {
 
+  const reversedComments = post.comments.slice().reverse()
+
+  const [sortCommentsInOldFirst,setSortCommentsInOldFirst] = useState(false)
+
   const [likes, setLikes] = useState(post.likes);
   const headers = getUserAuthHeader()
 
@@ -233,7 +237,10 @@ const CardPost = ({post,user,setPosts}) => {
         showComments && 
         <div className={css.commentContainer} >
           {
-            post.comments.map((comment,index) => {
+            sortCommentsInOldFirst ? 
+            reversedComments.map((comment,index) => {
+              if(index < 4) return <PostComments key={index} user={user} post={post} comment={comment} setAllPosts={setAllPosts} darkmode={darkmode} />
+             }) : post.comments.map((comment,index) => {
               if(index < 4) return <PostComments key={index} user={user} post={post} comment={comment} setAllPosts={setAllPosts} darkmode={darkmode} />
              })
           }

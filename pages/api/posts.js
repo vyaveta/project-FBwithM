@@ -167,7 +167,7 @@ router.delete('/:commentId/:postId',userAuthMiddlewareViaHeaders,async(req,res) 
         const post = await PostModel.findById(postId)
         if(!post) return res.json({status: false,msg: 'Post not found!'})
         
-        const comment = post.comment.find(comment => comment._id===commentId)
+        const comment = post.comments.find(comment => comment._id===commentId)
         //const comment = post.comment.filter(comment => comment._id===commentId)
         if(!comment) return res.json({status: false,msg: 'No comment Found'})
 
@@ -188,6 +188,7 @@ router.delete('/:commentId/:postId',userAuthMiddlewareViaHeaders,async(req,res) 
         await deleteComment()
     }catch(e){
         console.log(e,'is the error that occured while running the code for deleting a comment in the backend')
+        return res.json({status: false,msg: 'Internal Server Error'})
     }
 })
 
