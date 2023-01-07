@@ -73,3 +73,7 @@
 
 #updation 24
 * added delete post feature
+
+#updation 25 
+* added comment feature 
+-- bug fix required!!

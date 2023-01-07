@@ -8,3 +8,4 @@ export const getAllPostsRoute = `${baseUrl}/api/posts`
 export const RouteForLikingAPost = `${baseUrl}/api/posts/like`
 export const RouteForUnLikingAPost = `${baseUrl}/api/posts/unlike`
 export const routeForThePost = `${baseUrl}/api/posts`
+export const routeForPostComment = `${baseUrl}/api/posts/comment`

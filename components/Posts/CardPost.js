@@ -226,9 +226,9 @@ const CardPost = ({post,user,setPosts}) => {
         </div>
       </div>
       {
-        showComments && <PostComments />
+        showComments && <PostComments user={user} post={post} comments={post.comments} setAllPosts={setAllPosts} />
       }
-      <CommentInputField user={user} postId={post._id} />
+      <CommentInputField user={user} postId={post._id} setAllPosts={setAllPosts} />
     </div>
   )
 }

@@ -152,7 +152,7 @@ router.post('/comment/:postId',userAuthMiddlewareViaHeaders,async(req,res) => {
         }
         await post.comments.unshift(newComment)
         post.save()
-        return res.json({status: true,msg: 'Done',comment:comment._id})
+        return res.json({status: true,msg: 'Done',comment:newComment._id})
     }catch(e){
         console.log(e,'is the error that occured in while running the code of commenting the post on backend')
         return res.json({status: false,msg: 'Internal Server Error'})
