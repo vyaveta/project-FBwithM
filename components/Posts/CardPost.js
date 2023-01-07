@@ -175,9 +175,12 @@ const CardPost = ({post,user,setPosts}) => {
         </div>
         <div className={css.postMetaRight}>
           <div className={`${css.timediv}`}> {calculateTime(post.createdAt)} </div>
-          <BsThreeDotsVertical  onClick={toggleSetPostActions} 
-          className={`cursor-pointer`}
-          />
+          {
+            user._id === post.user._id &&
+            <BsThreeDotsVertical  onClick={toggleSetPostActions} 
+            className={`cursor-pointer`}
+            />
+          }
         </div>
         {
           showPostActions && 
@@ -185,7 +188,7 @@ const CardPost = ({post,user,setPosts}) => {
             <ul>
               <li>Edit <MdEdit /> </li>
               <li onClick={() => deletePost(post._id)}>Delete <MdDelete /> </li>
-              <li>Report  <IoIosFlag /> </li>
+              {/* <li>Report  <IoIosFlag /> </li> */}
             </ul>
           </div>
         }
@@ -225,8 +228,22 @@ const CardPost = ({post,user,setPosts}) => {
          </div>
         </div>
       </div>
+     
       {
-        showComments && <PostComments user={user} post={post} comments={post.comments} setAllPosts={setAllPosts} />
+        showComments && 
+        <div className={css.commentContainer} >
+          {
+            post.comments.map((comment,index) => {
+              if(index < 4) return <PostComments key={index} user={user} post={post} comment={comment} setAllPosts={setAllPosts} />
+             })
+          }
+        </div>
+      }
+      {
+        showComments && 
+        <div className={css.buttonDiv}>
+         <button className={css.viewMoreButton}>View More</button>
+        </div>
       }
       <CommentInputField user={user} postId={post._id} setAllPosts={setAllPosts} />
     </div>
@@ -234,3 +251,6 @@ const CardPost = ({post,user,setPosts}) => {
 }
 
 export default CardPost
+
+
+

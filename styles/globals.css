@@ -8,8 +8,9 @@
   --primaryDark: #2E0249;
   --primaryLight: #F806CC;
   --cursiveFont:  'Marck Script', cursive;
-  --greyWhite: 	 #cdcdcd;
+  --greyWhite: 	 #f0f2f5;
   --greyWhiteDark: rgb(83, 83, 83);
+  --secondaryGrey: #cecfd0;
 }
 .light{
   color: var(--darkText)

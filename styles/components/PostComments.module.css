@@ -7,7 +7,7 @@
     justify-content: center;
     align-items: flex-start;
     gap: 1rem;
-    padding: 1rem 0;
+    padding: 1px 0;
 }
 .commentBox{
     width: 100%;
@@ -67,7 +67,7 @@
 }
 .threeDotAction:active{
     border-radius: 50%;
-    background-color: var(--greyWhite);
+    background-color: var(--white);
 }
 .threeDotActionBox{
     position:absolute;

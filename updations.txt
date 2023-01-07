@@ -77,3 +77,7 @@
 #updation 25 
 * added comment feature 
 -- bug fix required!!
+
+#updation 26
+* Fixed the bug in comment box
+* improved comment box ui

@@ -6,20 +6,18 @@ import {MdDelete} from 'react-icons/md'
 import {IoIosFlag} from 'react-icons/io'
 import { calculateTime } from '../../utils/calculateTime'
 
-const PostComments = ({post,comments,user}) => {
+const PostComments = ({post,comment,user}) => {
 
   useEffect(() => {
-    console.log(comments,'ist e comment')
+    console.log(comment,'ist e comment')
   },[])
 
   const [showCommentActionBox,setShowCommentActionBox] = useState(false)
 
   return (
     <div className={css.container}>
-     {
-       comments && comments.map((comment,index) => {
-       return (
-        <div className={css.commentBox} key={index}>
+     
+        <div className={css.commentBox}>
         <div className={css.metaData}>
         {/* <div> */}
         <img src={comment.user.profilePicUrl} className={css.commentProfileImage} />
@@ -40,19 +38,14 @@ const PostComments = ({post,comments,user}) => {
              <ul>
                <li>Edit <MdEdit /></li>
                <li>Delete <MdDelete /></li>
-               <li>Report  <IoIosFlag /></li>
+               {/* <li>Report  <IoIosFlag /></li> */}
              </ul>
            </div>
           }
          </div>
         </div>
        </div>
-       )
-       })
-     }
-      <div className={css.buttonDiv}>
-         <button className={css.viewMoreButton}>View More</button>
-      </div>
+      
     </div>
   )
 }
