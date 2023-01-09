@@ -41,14 +41,28 @@ const CardPost = ({post,user,setPosts}) => {
   const [postCommentsCount,setPostCommentsCount] = useState(0)
   const [showComments,setShowComments] = useState(false)
   const [showPostActions,setShowPostActions] = useState(false)
+  const [showLikeAnimation,setShowLikeAnimation] = useState(false)
 
   const isDarkMode = useSelector(state=>state.darkmode.value)
   const [darkmode,setDarkmode] = useState(false)
   const [userCookie,setUserCookie] = useState('')
 
+  // Some refs
+  const likeAnimationRefs = {}
   const postActionBoxRef = useRef(null)
+  const likeAnimationRef = useRef(null)
 
-
+  const handleAddElement = elementId => {
+    console.log('hello')
+    // likeAnimationRefs[elementId] = useRef(null)
+  }
+  const handleRemoveElement = elementId => {
+    delete likeAnimationRefs[elementId]
+  }
+  
+  const handleDoubleClick = elementId => {
+    console.log(likeAnimationRefs[elementId],'is our selected ref')
+  }
 
   const handleError = msg => {
     toast.error(msg)
@@ -64,6 +78,8 @@ const CardPost = ({post,user,setPosts}) => {
       setLikes(prev => [...prev,{user:user._id}]) 
       setPostLikesCount(postLikesCount+1)
       setAllPosts()
+      const imageDiv = document.getElementById(postId)
+      if(imageDiv) console.log(imageDiv.styles,'is the image div')
     }else handleError(data.msg)
     }catch(e){
       console.log(e)
@@ -92,6 +108,7 @@ const CardPost = ({post,user,setPosts}) => {
     const {data} = await axios.get(getAllPostsRoute,{headers})
     if(!data.status) handleError(postsRes.data.msg)
     else setPosts(data.posts)
+    if(showLikeAnimation) setShowLikeAnimation(false)
   }
 
   const deletePost = async postId => {
@@ -133,16 +150,13 @@ const CardPost = ({post,user,setPosts}) => {
     
     if(likes.length > 0 && likes.filter(like => like.user === user._id).length > 0) setPostLiked(true)
     else setPostLiked(false)
-    console.log(likes,'is the likes')
     setPostLikesCount(likes.length)
   },[likes])
 
   useEffect(() => {
-    console.log(post,'ist the post')
     if(likes.length > 0 && likes.filter(like => like.user === user._id).length > 0) setPostLiked(true)
     else setPostLiked(false)
     setPostLikesCount(likes.length)
-    console.log(likes,'is the likes')
   },[post])
 
   
@@ -163,8 +177,8 @@ const CardPost = ({post,user,setPosts}) => {
   },[post])
 
   useEffect(() => {
-    console.log(post,'is the post from the Card post.js component')
-  },[])
+    console.log(likeAnimationRef,'is the like animation ref!',postActionBoxRef,'is the post Action ref')
+  },[likeAnimationRef])
 
   return (
     <div className={darkmode ? `${css.container} ${css.dark}`: css.container}>
@@ -204,8 +218,12 @@ const CardPost = ({post,user,setPosts}) => {
       </div>
      {
       post.picUrl &&
-      <div className={`${css.imageBox} cursor-pointer`} onDoubleClick={() => handleLikePost(post._id) } >
+      <div className={`${css.imageBox} cursor-pointer`} onDoubleClick={() => {
+        setShowLikeAnimation(true)
+        handleLikePost(post._id)
+      } } >
           <img src={post.picUrl} alt=""  />
+          <div className={showLikeAnimation ? css.likeAnimation : css.displayNone} ref={() => handleAddElement(post._id)} id={post._id}> <FcLike /> </div>
       </div>
      }
           {/* <div className={css.line} /> */}

@@ -107,6 +107,9 @@ a {
 .position-absolute{
   position: absolute;
 }
+.display-none{
+  display: none;
+}
 .cursor-pointer{
   cursor: pointer;
 }
@@ -136,6 +139,7 @@ a {
   height: 15rem;
   animation: blurmovement 12s linear infinite;
 }
+
 @keyframes blurmovement{
   0%{
     top: 7rem;

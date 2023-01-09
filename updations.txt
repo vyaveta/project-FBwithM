@@ -91,3 +91,6 @@
 #updation 29
 * sort comments done
 * doubletap to like post done
+
+#updation 30
+* added like animation on doubletap to the posts that contain image 
