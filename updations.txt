@@ -87,3 +87,7 @@
 
 #updation 28
 * delete comment done!
+
+#updation 29
+* sort comments done
+* doubletap to like post done

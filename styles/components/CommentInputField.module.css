@@ -16,6 +16,8 @@
     outline: none;
     border: none;
     border-bottom: 2px solid inherit;
+    font-size: 1rem;
+    font-weight: 600;
 }
 .container img{
     height: 35px;

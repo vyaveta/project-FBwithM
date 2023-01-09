@@ -6,6 +6,7 @@ import {BsThreeDotsVertical} from 'react-icons/bs'
 import {MdEdit} from 'react-icons/md'
 import {MdDelete} from 'react-icons/md'
 import {IoIosFlag} from 'react-icons/io'
+import {BsDot} from 'react-icons/bs'
 
 // Local functions
 import { calculateTime } from '../../utils/calculateTime'
@@ -35,7 +36,9 @@ const PostComments = ({post,comment,user,darkmode}) => {
         <img src={comment.user.profilePicUrl} className={css.commentProfileImage} />
         {/* </div> */}
         {/* <div> */}
-        <p className='margin-0 fontweight-600'>{comment?.user?.username}</p>
+        <p className='margin-0 color-primaryLight fontweight-600'>{comment?.user?.username}</p>
+        
+        {/* <BsDot /> */}
         {/* </div> */}
         </div>
         <div className={`width-100 ${css.metaData}`}>

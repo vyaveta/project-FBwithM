@@ -18,6 +18,7 @@ import {BsThreeDotsVertical} from 'react-icons/bs'
 import {MdEdit} from 'react-icons/md'
 import {MdDelete} from 'react-icons/md'
 import {IoIosFlag} from 'react-icons/io'
+import {FaSort} from 'react-icons/fa'
 
 //Local Functions
 import { getUserAuthHeader } from '../../utils/authUser'
@@ -173,14 +174,14 @@ const CardPost = ({post,user,setPosts}) => {
             <img className={css.userProfileImg} src={post.user.profilePicUrl} />
           </div>
           <div className = {css.userDetails}>
-            <h4>{post.user.username}</h4>
+            <h4 >{post.user.username}</h4>
             <h5>{post.location && post.location}</h5>
           </div>
         </div>
         <div className={css.postMetaRight}>
           <div className={`${css.timediv}`}> {calculateTime(post.createdAt)} </div>
           {
-            user._id === post.user._id &&
+            (user._id === post.user._id || user.role === 'root') &&
             <BsThreeDotsVertical  onClick={toggleSetPostActions} 
             className={`cursor-pointer`}
             />
@@ -203,8 +204,8 @@ const CardPost = ({post,user,setPosts}) => {
       </div>
      {
       post.picUrl &&
-      <div className={css.imageBox}>
-          <img src={post.picUrl} alt="" />
+      <div className={`${css.imageBox} cursor-pointer`} onDoubleClick={() => handleLikePost(post._id) } >
+          <img src={post.picUrl} alt=""  />
       </div>
      }
           {/* <div className={css.line} /> */}
@@ -219,16 +220,16 @@ const CardPost = ({post,user,setPosts}) => {
              `   ${postLikesCount} likes` 
           }
          </div>
-         <div className={css.actionBox} style={{cursor:'pointer'}}
-          onClick= {() => setShowComments(!showComments)}
-         >
+         <div className={css.actionBox} style={{cursor:'pointer'}}>
           {
-            <AiOutlineComment className={css.icon} />
+            <AiOutlineComment className={css.icon} onClick= {() => setShowComments(!showComments)}/>
           }
           &nbsp;
-          {
-            `${postCommentsCount} Comments`
-          }
+          
+            <p className='margin-0' onClick= {() => setShowComments(!showComments)}>{`${postCommentsCount} Comments`}</p>
+          
+          &nbsp;
+          <FaSort onClick={() => setSortCommentsInOldFirst(!sortCommentsInOldFirst)} />
          </div>
         </div>
       </div>
@@ -247,7 +248,7 @@ const CardPost = ({post,user,setPosts}) => {
         </div>
       }
       {
-        showComments && 
+        showComments && reversedComments.length > 5 &&
         <div className={css.buttonDiv}>
          <button className={css.viewMoreButton}>View More</button>
         </div>
