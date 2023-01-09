@@ -56,19 +56,11 @@ const CardPost = ({post,user,setPosts}) => {
     console.log('hello')
     // likeAnimationRefs[elementId] = useRef(null)
   }
-  const handleRemoveElement = elementId => {
-    delete likeAnimationRefs[elementId]
-  }
-  
-  const handleDoubleClick = elementId => {
-    console.log(likeAnimationRefs[elementId],'is our selected ref')
-  }
-
   const handleError = msg => {
     toast.error(msg)
   }
 
-  const handleLikePost = async postId => {
+  const handleLikePost = async (postId,doubleTap=false) => {
     try{
       console.log(userCookie,'is the user cookie')
     const {data} = await axios.post(`${RouteForLikingAPost}/${postId}`,{
@@ -80,7 +72,13 @@ const CardPost = ({post,user,setPosts}) => {
       setAllPosts()
       const imageDiv = document.getElementById(postId)
       if(imageDiv) console.log(imageDiv.styles,'is the image div')
-    }else handleError(data.msg)
+    }else if(!doubleTap) handleError(data.msg)
+    else {
+      setShowLikeAnimation(true)
+      setTimeout(() => {
+        setShowLikeAnimation(false)
+      },1000)
+    }
     }catch(e){
       console.log(e)
       handleError('Oops something went wrong')
@@ -220,10 +218,10 @@ const CardPost = ({post,user,setPosts}) => {
       post.picUrl &&
       <div className={`${css.imageBox} cursor-pointer`} onDoubleClick={() => {
         setShowLikeAnimation(true)
-        handleLikePost(post._id)
+        handleLikePost(post._id,true)
       } } >
           <img src={post.picUrl} alt=""  />
-          <div className={showLikeAnimation ? css.likeAnimation : css.displayNone} ref={() => handleAddElement(post._id)} id={post._id}> <FcLike /> </div>
+          <div className={showLikeAnimation ? css.likeAnimation : css.displayNone} id={post._id}> <FcLike /> </div>
       </div>
      }
           {/* <div className={css.line} /> */}
