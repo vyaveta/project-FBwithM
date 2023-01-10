@@ -79,6 +79,7 @@ const CreatePost = ({user,posts,setPosts}) => {
 
   const handleUploadNewPost = async () => {
     try{
+      setLoading(true)
       if(newPost.text.trim()==='') return handleError('Enter your Thoughts')
       const headers = getUserAuthHeader()
       console.log(newPost,'is the newPost')
@@ -96,6 +97,9 @@ const CreatePost = ({user,posts,setPosts}) => {
       }
     }catch(e){
       console.log(e,'is the error that occured in the handleUploadNewPost function in the CreatePost.js')
+    }
+    finally{
+      setLoading(false)
     }
   }
 
@@ -163,6 +167,12 @@ const CreatePost = ({user,posts,setPosts}) => {
           <div className={css.postImagePreviewBox}>
             <img src={mediaPreview} />
           </div>
+        </div>
+      }
+      {
+        loading && 
+        <div className={css.loadingDiv}>
+          <img src="/loader.gif" />
         </div>
       }
     </div>

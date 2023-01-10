@@ -104,3 +104,7 @@
 * fixed the bug in emoji box.
 * improved modile responsiveness
 * add nice little animatio to the darkmode/lightmode button.
+
+#updation 32 
+* fixed a bug in the login page loading animation
+* added a loading animation when creating a post

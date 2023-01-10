@@ -71,6 +71,7 @@ function Login() {
         }
     }
     const handleError = (msg) => {
+        setLoading(false)
         toast.error(msg,toastOptions)
     }
 
