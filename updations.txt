@@ -97,3 +97,10 @@
 
 #updation 30.1
 * improved the function and Ux for the like post animation on double tap.
+
+#updation 31
+* improved ui responsiveness
+* improved the emoji box ui 
+* fixed the bug in emoji box.
+* improved modile responsiveness
+* add nice little animatio to the darkmode/lightmode button.

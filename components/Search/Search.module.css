@@ -93,3 +93,8 @@
     /* height: 6rem; */
     /* background-color: red; */
 }
+@media screen and (max-width: 900px){
+    .container{
+        display: none;
+    }
+}

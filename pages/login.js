@@ -67,7 +67,7 @@ function Login() {
             console.log(`${er} is the error that occured in the handleSubmit function in the login frontend`)
             handleError('Oops something went wrong')
         }finally{
-            setLoading(false)
+          //  setLoading(false) 
         }
     }
     const handleError = (msg) => {

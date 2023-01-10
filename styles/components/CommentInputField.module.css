@@ -26,7 +26,28 @@
     object-fit: cover;
 }
 .icon{
-    height: 20px;
+    height: 20px !important;
     cursor: pointer;
     color: inherit;
+}
+.emojiBoxDiv{
+    bottom: 0;
+    right: 0;
+    position: absolute !important;
+    z-index: 9;
+}
+.icon2{
+    height: 30px !important;
+    width: 30px !important;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width:500px){
+    .emojiBoxDiv{
+        bottom: 0;
+        right: 0;
+        position: absolute !important;
+        z-index: 9;
+    }
 }

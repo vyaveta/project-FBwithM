@@ -10,7 +10,7 @@
     align-items: center;
     gap: 1rem;
 }
-.container::-webkit-scrollbar {
+.container::-webkit-scrollbar { 
     display: none;
   }
 
@@ -32,4 +32,14 @@
 }
 .dark::-webkit-scrollbar{
     display: none;
+}
+
+@media screen and (max-width: 900px){
+    .container{
+       width: 100%;
+    }
+    .dark{
+        width: 100%;
+        overflow-x: hidden;
+    }
 }

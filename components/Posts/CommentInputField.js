@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import css from '../../styles/components/CommentInputField.module.css'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import EmojiPicker from 'emoji-picker-react';
 
 // Icons
 import {GrSend} from 'react-icons/gr'
@@ -10,6 +11,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { routeForPostComment } from '../../utils/userRoutes'
 import { getUserAuthHeader } from '../../utils/authUser'
+import {MdOutlineEmojiEmotions} from 'react-icons/md'
 
 const CommentInputField = ({postId,user,setAllPosts}) => {
 
@@ -17,9 +19,21 @@ const CommentInputField = ({postId,user,setAllPosts}) => {
 
     const [text,setText] = useState('')
     const [loading,setLoading] = useState(false)
+    const [showEmojiBox,setShowEmojiBox] = useState(false)
 
     const handleError = msg => {
       toast.error(msg)
+    }
+
+    const handleEmojiClick = e => {
+      console.log('hellosjflksj')
+     try{
+      console.log(e.emoji)
+      let message = text + e.emoji
+      setText(message)
+     }catch(e){
+      toast.error("something went wrong")
+     }
     }
 
     const handlePostComment = async e => {
@@ -39,6 +53,12 @@ const CommentInputField = ({postId,user,setAllPosts}) => {
   return (
     <div className={css.container}>
         <img src={user.profilePicUrl} />
+        <MdOutlineEmojiEmotions className={css.icon2} onClick={() => setShowEmojiBox(!showEmojiBox)} />
+        <div className={css.emojiBoxDiv} >
+        {
+          showEmojiBox && <EmojiPicker width={'400px'} height={'400px'} theme={'dark'} className={css.emojiBox} onEmojiClick={handleEmojiClick} />
+        }
+        </div>
         <input type='text' placeholder='Comment this post' name='text' autoComplete='off' 
          value={text} 
          onChange={ e => setText(e.target.value)}

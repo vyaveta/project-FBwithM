@@ -96,6 +96,19 @@
     background: var(--primaryDark);
     font-size: 1.8rem;
     cursor: pointer;
+    transition: 5s ease-in;
+}
+.darkmode:active{
+    width: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 2.2rem;
+    border-radius: 1.2rem;
+    border: none;
+    background: var(--primaryDark);
+    font-size: 1.8rem;
+    cursor: pointer;
 }
 .lightmode{
     width: 80px;
@@ -108,8 +121,21 @@
     background: var(--primaryDark);
     font-size: 1.8rem;
     cursor: pointer;
+    transition: 3s ease-in;
 }
-
+.lightmode:active{
+    width: 80px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 2.2rem;
+    border-radius: 1.2rem;
+    border: none;
+    background: var(--primaryDark);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: 2s;
+}
 .darkmodeBox {
     position: absolute;
     bottom: 1rem;
@@ -120,4 +146,38 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.darkmode > *{
+    animation: rotateAnimation 10s infinite;
+}
+.lightmode > *{
+    animation: rotateAnimation 15s infinite;
+}
+
+@keyframes rotateAnimation {
+    0%{
+       transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(195deg);
+    }
+    0%{
+        transform: rotate(360deg)
+    }
+}
+
+@media screen and (max-width:900px){
+    .container h3{
+        display: none;
+    }
+    .darkmodeBox{
+        transform: rotate(90deg);
+        bottom: 2rem !important;
+    }
+}
+
+@media screen and (max-width:700px){
+    .container h1{
+        display: none;
+    }
 }

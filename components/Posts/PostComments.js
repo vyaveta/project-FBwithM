@@ -36,12 +36,12 @@ const PostComments = ({post,comment,user,darkmode}) => {
         <img src={comment.user.profilePicUrl} className={css.commentProfileImage} />
         {/* </div> */}
         {/* <div> */}
-        <p className='margin-0 color-primaryLight fontweight-600'>{comment?.user?.username}</p>
+        <p className={`margin-0 color-primaryLight fontweight-600 ${css.profileName}`}>{comment?.user?.username}</p>
         
         {/* <BsDot /> */}
         {/* </div> */}
         </div>
-        <div className={`width-100 ${css.metaData}`}>
+        <div className={`width-100 ${css.metaData} ${css.commentTextDiv}`}>
         <p className={`${css.commentText} margin-0`} >{comment.text}</p>
         </div>
         <div className={`${css.metaDataWithAction} ${css.noWrap}`}>
